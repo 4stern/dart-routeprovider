@@ -4,7 +4,7 @@
 
 Install the package
 ```
-pub get route_provider
+$ pub get route_provider
 ```
 
 add it to your dependencies
