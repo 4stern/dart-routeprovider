@@ -1,7 +1,7 @@
 name: routeprovider
-description: Provides a routing for http-server
+description: Provides a routing for http-server from dart:io
 version: 0.1.0
 author: Robert Beyer <4sternrb@googlemail.com>
-homepage: https://github.com/4stern/dart-routeprovider
+homepage: http://github.com/4stern/dart-routeprovider
 dependencies:
 dev_dependencies:
