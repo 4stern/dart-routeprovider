@@ -1,4 +1,4 @@
-part of routeprovider;
+part of route_provider;
 
 class FileResponse extends ResponseHandler {
     String contentType = "text/plain";

@@ -1,4 +1,4 @@
-part of routeprovider;
+part of route_provider;
 
 abstract class ResponseHandler {
     String filename;

@@ -1,7 +1,8 @@
-library routeprovider;
+library route_provider;
 
 import 'dart:async';
 import 'dart:io';
+import 'dart:convert';
 
 part 'src/route_controller.dart';
 part 'src/response_handler.dart';
@@ -27,7 +28,6 @@ class RouteProvider {
 
     void handleRequest(HttpRequest request) {
         String path = request.uri.path;
-        print('incomming request: ' + path);
 
         // direct cancels
         if (path.contains('..') || path.contains(':')) {
@@ -106,9 +106,6 @@ class RouteProvider {
     }
 
     Map compareUrlPattern(String url, String urlPattern){
-        print('compareUrlPattern');
-        print(url);
-        print(urlPattern);
         List requestedUrl = url.split("/");
         List patternUrl = urlPattern.split("/");
         int countIdent = 0;
@@ -133,5 +130,4 @@ class RouteProvider {
             return null;
         }
     }
-
 }

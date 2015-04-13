@@ -1,4 +1,4 @@
-name: routeprovider
+name: route_provider
 description: Provides a routing for http-server from dart:io
 version: 0.1.0
 author: Robert Beyer <4sternrb@googlemail.com>
