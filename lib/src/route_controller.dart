@@ -1,4 +1,4 @@
-part of dart-routeprovider;
+part of routeprovider;
 
 abstract class RouteController {
     RouteController();

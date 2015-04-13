@@ -1,10 +1,11 @@
-library dart-routeprovider;
+library routeprovider;
 
-part 'RouteController.dart';
-part 'ResponseHandler.dart';
-part 'JadeResponse.dart';
-part 'JSONResponse.dart';
-part 'FileResponse.dart';
+import 'dart:async';
+import 'dart:io';
+
+part 'src/route_controller.dart';
+part 'src/response_handler.dart';
+part 'src/file_response.dart';
 
 class RouteProvider {
     HttpServer server;

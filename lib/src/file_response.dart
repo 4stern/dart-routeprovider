@@ -1,4 +1,4 @@
-part of dart-routeprovider;
+part of routeprovider;
 
 class FileResponse extends ResponseHandler {
     String contentType = "text/plain";
