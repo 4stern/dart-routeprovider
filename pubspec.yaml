@@ -1,0 +1,5 @@
+name: dart-routeprovider
+version: 0.1.0
+author: Robert Beyer <4sternrb@googlemail.com>
+dependencies:
+dev_dependencies:
