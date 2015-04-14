@@ -2,16 +2,17 @@
 
 ## Installation
 
-Install the package
-```
-$ pub get route_provider
-```
-
-add it to your dependencies
+Add it to your dependencies
 ```
 dependencies:
   route_provider: any
 ```
+
+and install the package
+```
+$ pub get
+```
+
 ## Usage
 ```javascript
 import 'dart:io';
