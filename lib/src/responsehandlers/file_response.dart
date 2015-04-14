@@ -1,7 +1,6 @@
 part of route_provider;
 
 class FileResponse extends ResponseHandler {
-    String contentType = "text/plain";
 
     FileResponse(String filename) : super(filename);
 
@@ -11,15 +10,11 @@ class FileResponse extends ResponseHandler {
             if(ex == true){
                 Future<String> finishedReading = file.readAsString(encoding: UTF8);
                 finishedReading.then((template) {
-                    String ct = this.contentType;
 
-                    if (this.filename.endsWith('.js')) {
-                        ct = "application/javascript";
-                    } else if (this.filename.endsWith('.css')) {
-                        ct = "text/css";
-                    }
+                    String mimeType = mime(fileName);
+                    if (mimeType == null) mimeType = 'text/plain; charset=UTF-8';
 
-                    request.response.headers.add(HttpHeaders.CONTENT_TYPE, ct);
+                    request.response.headers.add(HttpHeaders.CONTENT_TYPE, mimeType);
                     request.response.write(template);
                     request.response.close();
                 });

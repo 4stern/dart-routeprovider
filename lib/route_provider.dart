@@ -4,9 +4,12 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:convert';
 
+import 'package:mime_type/mime_type.dart';
+
 part 'src/route_controller.dart';
 part 'src/response_handler.dart';
-part 'src/file_response.dart';
+
+part 'src/responsehandlers/file_response.dart';
 
 class RouteProvider {
     HttpServer server;
