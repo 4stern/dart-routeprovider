@@ -1,11 +1,13 @@
 part of route_provider;
 
 class FileResponse extends ResponseHandler {
+    String filename;
 
-    FileResponse(String filename) : super(filename);
+    FileResponse(this.filename) : super();
 
     String response(HttpRequest request, Map vars) {
-        var file = new File(this.filename);
+        String fileName = this.filename;
+        var file = new File(fileName);
         file.exists().then((ex){
             if(ex == true){
                 Future<String> finishedReading = file.readAsString(encoding: UTF8);

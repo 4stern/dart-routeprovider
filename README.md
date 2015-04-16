@@ -25,12 +25,12 @@ main() {
         })
         ..route({
             "url": "/",
-            "controller": new ControllerEmpty(),
+            "controller": new RouteControllerEmpty(),
             "response": new FileResponse("docroot/index.html")
         })
         ..route({
             "url": "/impress",
-            "controller": new ControllerEmpty(),
+            "controller": new RouteControllerEmpty(),
             "response": new FileResponse("docroot/impress.html")
         })
         ..start();

@@ -10,3 +10,8 @@ abstract class RouteController {
         return completer.future;
     }
 }
+
+/**
+ * Empty implementation of RouteController
+ */
+class RouteControllerEmpty extends RouteController {}
