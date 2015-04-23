@@ -15,6 +15,7 @@ class RouteProvider {
     HttpServer server;
     Map cfg;
     Map<String, Map> routeControllers = new Map();
+    String basePath = new File(Platform.script.toFilePath()).parent.path;
 
     RouteProvider(this.server, this.cfg);
 
@@ -85,10 +86,14 @@ class RouteProvider {
             } else {
 
                 //try to find the file with the default file-response-handler
-                if (this.cfg.containsKey('staticContentRoot') && path.startsWith(this.cfg['staticContentRoot']+'/')) {
+                if (this.cfg.containsKey('staticContentRoot')) {
+                    String filePath = basePath + this.cfg['staticContentRoot'] + path;
+
+                    filePath = filePath.replaceAll('/', Platform.pathSeparator);
+                    filePath = filePath.replaceAll(Platform.pathSeparator+Platform.pathSeparator, Platform.pathSeparator);
 
                     try {
-                        FileResponse fr = new FileResponse(path.substring(1));
+                        FileResponse fr = new FileResponse(filePath);
                         fr.response(request, {});
                     } catch (exception) {
                         //404 not found
