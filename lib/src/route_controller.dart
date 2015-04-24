@@ -3,7 +3,7 @@ part of route_provider;
 abstract class RouteController {
     RouteController();
 
-    Future<Map> execute(Map params) {
+    Future<Map> execute(HttpRequest request, Map params) {
         var completer = new Completer();
         Map map = new Map();
         completer.complete(map);

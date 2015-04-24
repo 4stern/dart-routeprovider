@@ -53,7 +53,7 @@ class RouteProvider {
             ResponseHandler responseHandler = routeConfig["response"];
 
             //create vars for the template
-            controller.execute(params).then((templateVars){
+            controller.execute(request, params).then((templateVars){
                 responseHandler.response(request, templateVars);
             });
 
@@ -80,7 +80,7 @@ class RouteProvider {
                 ResponseHandler responseHandler = routeConfig["response"];
 
                 //create vars for the template
-                controller.execute(comparedUrlParams).then((templateVars){
+                controller.execute(request, comparedUrlParams).then((templateVars){
                     responseHandler.response(request, templateVars);
                 });
             } else {
