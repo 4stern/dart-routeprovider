@@ -1,6 +1,6 @@
 part of route_provider;
 
-abstract class RouteError extends Error {
+class RouteError extends Error {
     int _httpStatus;
     String _httpMessage;
 
