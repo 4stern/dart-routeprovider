@@ -3,7 +3,7 @@ part of route_provider;
 abstract class RouteController {
     RouteController();
 
-    Future<Map> execute(Map params) async  {
+    Future<Map> execute(HttpRequest request, Map params) async  {
         Map map = new Map();
         return map;
     }
