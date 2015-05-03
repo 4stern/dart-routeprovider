@@ -30,7 +30,7 @@ class RouteProvider {
         server.listen(this.handleRequest);
     }
 
-    void handleRequest(HttpRequest request) {
+    void handleRequest(HttpRequest request) async {
         String path = request.uri.path;
 
         // direct cancels
@@ -53,9 +53,8 @@ class RouteProvider {
             ResponseHandler responseHandler = routeConfig["response"];
 
             //create vars for the template
-            controller.execute(request, params).then((templateVars){
-                responseHandler.response(request, templateVars);
-            });
+            var templateVars = await controller.execute(request, params);
+            await responseHandler.response(request, templateVars);
 
         } else {
 
@@ -80,9 +79,8 @@ class RouteProvider {
                 ResponseHandler responseHandler = routeConfig["response"];
 
                 //create vars for the template
-                controller.execute(request, comparedUrlParams).then((templateVars){
-                    responseHandler.response(request, templateVars);
-                });
+                var templateVars = await controller.execute(request, comparedUrlParams);
+                await responseHandler.response(request, templateVars);
             } else {
 
                 //try to find the file with the default file-response-handler
@@ -122,10 +120,10 @@ class RouteProvider {
 
         if (requestedUrl.length == patternUrl.length) {
             for (int i=0; i<requestedUrl.length; i++) {
-                bool dobblePoint = patternUrl[i].startsWith(":");
-                if ( requestedUrl[i] == patternUrl[i] || dobblePoint==true ) {
+                bool doublePoint = patternUrl[i].startsWith(":");
+                if ( requestedUrl[i] == patternUrl[i] || doublePoint==true ) {
                     countIdent++;
-                    if(dobblePoint==true){
+                    if(doublePoint==true){
                         matchedResult[patternUrl[i].substring(1)] = requestedUrl[i];
                     }
                 }
