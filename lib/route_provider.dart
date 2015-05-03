@@ -8,6 +8,7 @@ import 'package:mime_type/mime_type.dart';
 
 part 'src/route_controller.dart';
 part 'src/response_handler.dart';
+part 'src/errors/route_error.dart';
 
 part 'src/responsehandlers/file_response.dart';
 
@@ -53,8 +54,20 @@ class RouteProvider {
             ResponseHandler responseHandler = routeConfig["response"];
 
             //create vars for the template
-            var templateVars = await controller.execute(request, params);
-            await responseHandler.response(request, templateVars);
+            try{
+                var templateVars = await controller.execute(request, params);
+                await responseHandler.response(request, templateVars);
+            } on RouteError catch(routeError) {
+                request.response.statusCode = routeError.getStatus();
+                request.response
+                    ..write(routeError.getMessage())
+                    ..close();
+            } catch (error) {
+                request.response.statusCode = HttpStatus.INTERNAL_SERVER_ERROR;
+                request.response
+                    ..write(error)
+                    ..close();
+            }
 
         } else {
 

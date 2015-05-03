@@ -1,5 +1,9 @@
 ## 0.1.7 (2015-05-03)
 Feature:
+- add RouteError for transporting http-status-codes and messages to this layer; to handle error output not for your own
+
+## 0.1.7 (2015-05-03)
+Feature:
 - add async/await handling
 
 ## 0.1.6 (2015-04-24)
