@@ -1,3 +1,7 @@
+## 0.1.7 (2015-05-03)
+Feature:
+- add async/await handling
+
 ## 0.1.6 (2015-04-24)
 Feature:
 - RouteControllers execute-methode gets the request as parameter
