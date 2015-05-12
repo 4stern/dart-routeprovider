@@ -57,11 +57,13 @@ class RouteProvider {
             try{
                 var templateVars = await controller.execute(request, params);
                 await responseHandler.response(request, templateVars);
+
             } on RouteError catch(routeError) {
                 request.response.statusCode = routeError.getStatus();
                 request.response
                     ..write(routeError.getMessage())
                     ..close();
+
             } catch (error) {
                 request.response.statusCode = HttpStatus.INTERNAL_SERVER_ERROR;
                 request.response
@@ -94,12 +96,18 @@ class RouteProvider {
                 try{
                     var templateVars = await controller.execute(request, comparedUrlParams);
                     await responseHandler.response(request, templateVars);
+
                 } on RouteError catch(routeError) {
+                    print("route_rpvoder: routeError");
+                    print(routeError.getMessage());
                     request.response.statusCode = routeError.getStatus();
                     request.response
                         ..write(routeError.getMessage())
                         ..close();
+
                 } catch (error) {
+                    print("route_rpvoder: error");
+                    print(error);
                     request.response.statusCode = HttpStatus.INTERNAL_SERVER_ERROR;
                     request.response
                         ..write(error)
