@@ -46,6 +46,10 @@ main() {
 4. Push to the branch: `git push origin my-new-feature`
 5. Submit a pull request :D
 
+## Chat
+
+gitter: https://gitter.im/4stern/dart-routeprovider
+
 ## Credits
 
 Robert Beyer <4sternrb@googlemail.com>
