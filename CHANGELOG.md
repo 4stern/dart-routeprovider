@@ -1,3 +1,6 @@
+## 0.1.13
+- Adding helfer functions to route-controller for parsing body-data like post-values
+
 ## 0.1.9 (2015-05-03)
 Feature:
 - add RouteError for transporting http-status-codes and messages to this layer; to handle error output not for your own
