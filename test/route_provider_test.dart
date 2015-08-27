@@ -1,8 +1,8 @@
 library route_provider;
 
+import 'dart:async';
 import 'dart:io';
 import 'package:route_provider/route_provider.dart';
-import 'dart:async';
 
 class RouteControllerError extends RouteController {
     RouteControllerError();
@@ -10,29 +10,44 @@ class RouteControllerError extends RouteController {
     Future<Map> execute(HttpRequest request, Map params) async  {
         throw new RouteError(HttpStatus.NOT_FOUND,"ERROR");
     }
-
 }
 
-void main() async {
+class APIController extends RestApiController {
+    Future<Map> onGet(HttpRequest request, Map params) async {
+        throw new RouteError(HttpStatus.INTERNAL_SERVER_ERROR, 'Not supported');
+    }
+}
+
+Future main() async {
 
     HttpServer server = await HttpServer.bind(InternetAddress.LOOPBACK_IP_V4, 4040);
 
     print('listening on localhost, port ${server.port}');
 
     //start webserver
-    new RouteProvider(server, {
+    RouteProvider provider = new RouteProvider(server, {
         "defaultRoute":"/",
         "staticContentRoot":"/docroot"
     })
-    ..route({
-        "url": "/",
-        "controller": new RouteControllerEmpty(),
-        "response": new FileResponse("docroot/home.html")
-    })
-    ..route({
-        "url": "/error",
-        "controller": new RouteControllerError(),
-        "response": new FileResponse("docroot/home.html")
-    })
+
+    ..route(
+        // url: "/",
+        // controller: new EmptyRouteController(),
+        responser: new FileResponse("docroot/home.html")
+    )
+    ..route(
+        url: "/error",
+        controller: new RouteControllerError(),
+        responser: new FileResponse("docroot/home.html")
+    )
+    ..route(
+        url: "/error2",
+        controller: new APIController(),
+        responser: new FileResponse("docroot/home.html")
+    )
     ..start();
+
+    //perform more tests here
+
+    provider.stop();
 }
