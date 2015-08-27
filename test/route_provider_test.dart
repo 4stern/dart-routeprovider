@@ -1,16 +1,17 @@
 library route_provider;
 
+import 'dart:async';
 import 'dart:io';
 import 'package:route_provider/route_provider.dart';
 
-void main() async {
+Future main() async {
 
     HttpServer server = await HttpServer.bind(InternetAddress.LOOPBACK_IP_V4, 4040);
 
     print('listening on localhost, port ${server.port}');
 
     //start webserver
-    new RouteProvider(server, {
+    RouteProvider provider = new RouteProvider(server, {
         "defaultRoute":"/",
         "staticContentRoot":"/docroot"
     })
@@ -20,4 +21,8 @@ void main() async {
         responser: new FileResponse("docroot/home.html")
     )
     ..start();
+
+    //perform more tests here
+
+    provider.stop();
 }

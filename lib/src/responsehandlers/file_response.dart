@@ -5,7 +5,7 @@ class FileResponse extends ResponseHandler {
 
     FileResponse(this.filename) : super();
 
-    String response(HttpRequest request, Map vars) {
+    Future response(HttpRequest request, Map vars) {
         String fileName = this.filename;
         var file = new File(fileName);
         file.exists().then((exists){
@@ -25,5 +25,6 @@ class FileResponse extends ResponseHandler {
                     ..close();
             }
         });
+        return null;
     }
 }
