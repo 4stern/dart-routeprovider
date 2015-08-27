@@ -25,16 +25,16 @@ main() {
             "defaultRoute":"/",
             "staticContentRoot":"/docroot"
         })
-        ..route({
-            "url": "/",
-            "controller": new RouteControllerEmpty(),
-            "response": new FileResponse("docroot/index.html")
-        })
-        ..route({
-            "url": "/impress",
-            "controller": new RouteControllerEmpty(),
-            "response": new FileResponse("docroot/impress.html")
-        })
+        ..route(
+            url: "/",
+            controller: new EmptyRouteController(),
+            responser: new FileResponse("docroot/index.html")
+        )
+        ..route(
+            url: "/impress",
+            controller: new RestApiController(),
+            responser: new FileResponse("docroot/impress.html")
+        )
         ..start();
     }).catchError((e) => print(e.toString()));
 }
