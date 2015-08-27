@@ -10,7 +10,12 @@ class RouteControllerError extends RouteController {
     Future<Map> execute(HttpRequest request, Map params) async  {
         throw new RouteError(HttpStatus.NOT_FOUND,"ERROR");
     }
+}
 
+class APIController extends RestApiController {
+    Future<Map> onGet(HttpRequest request, Map params) async {
+        throw new RouteError(HttpStatus.INTERNAL_SERVER_ERROR, 'Not supported');
+    }
 }
 
 Future main() async {
@@ -33,6 +38,11 @@ Future main() async {
     ..route(
         url: "/error",
         controller: new RouteControllerError(),
+        responser: new FileResponse("docroot/home.html")
+    )
+    ..route(
+        url: "/error2",
+        controller: new APIController(),
         responser: new FileResponse("docroot/home.html")
     )
     ..start();
