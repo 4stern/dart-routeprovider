@@ -1,4 +1,4 @@
-## 0.2.0 (2015-08-??)
+## 0.2.0 (2015-08-27)
 - rename RouteControllerEmpty to EmptyRouteController
 - add JsonResponser
 - add ApiRestController
