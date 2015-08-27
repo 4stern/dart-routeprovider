@@ -6,6 +6,7 @@ import 'package:mime_type/mime_type.dart';
 
 part 'src/route_controller.dart';
 part 'src/response_handler.dart';
+part 'src/errors/route_error.dart';
 part 'src/responsehandlers/file_response.dart';
 part 'src/responsehandlers/JsonResponse.dart';
 
@@ -58,9 +59,22 @@ class RouteProvider {
             ResponseHandler responseHandler = this.responsers[path];
 
             //create vars for the template
-            var templateVars = await controller.execute(request, params);
-            await responseHandler.response(request, templateVars);
+            try{
+                var templateVars = await controller.execute(request, params);
+                await responseHandler.response(request, templateVars);
 
+            } on RouteError catch(routeError) {
+                request.response.statusCode = routeError.getStatus();
+                request.response
+                    ..write(routeError.getMessage())
+                    ..close();
+
+            } catch (error) {
+                request.response.statusCode = HttpStatus.INTERNAL_SERVER_ERROR;
+                request.response
+                    ..write(error)
+                    ..close();
+            }
         } else {
 
             //try to handle urls with inner-vars
@@ -81,8 +95,26 @@ class RouteProvider {
                 ResponseHandler responseHandler = this.responsers[comparedUrl];
 
                 //create vars for the template
-                var templateVars = await controller.execute(request, comparedUrlParams);
-                await responseHandler.response(request, templateVars);
+                try{
+                    var templateVars = await controller.execute(request, comparedUrlParams);
+                    await responseHandler.response(request, templateVars);
+
+                } on RouteError catch(routeError) {
+                    print("route_rpvoder: routeError");
+                    print(routeError.getMessage());
+                    request.response.statusCode = routeError.getStatus();
+                    request.response
+                        ..write(routeError.getMessage())
+                        ..close();
+
+                } catch (error) {
+                    print("route_rpvoder: error");
+                    print(error);
+                    request.response.statusCode = HttpStatus.INTERNAL_SERVER_ERROR;
+                    request.response
+                        ..write(error)
+                        ..close();
+                }
             } else {
 
                 //try to find the file with the default file-response-handler

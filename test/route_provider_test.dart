@@ -4,6 +4,15 @@ import 'dart:async';
 import 'dart:io';
 import 'package:route_provider/route_provider.dart';
 
+class RouteControllerError extends RouteController {
+    RouteControllerError();
+
+    Future<Map> execute(HttpRequest request, Map params) async  {
+        throw new RouteError(HttpStatus.NOT_FOUND,"ERROR");
+    }
+
+}
+
 Future main() async {
 
     HttpServer server = await HttpServer.bind(InternetAddress.LOOPBACK_IP_V4, 4040);
@@ -15,9 +24,15 @@ Future main() async {
         "defaultRoute":"/",
         "staticContentRoot":"/docroot"
     })
+
     ..route(
         // url: "/",
         // controller: new EmptyRouteController(),
+        responser: new FileResponse("docroot/home.html")
+    )
+    ..route(
+        url: "/error",
+        controller: new RouteControllerError(),
         responser: new FileResponse("docroot/home.html")
     )
     ..start();
