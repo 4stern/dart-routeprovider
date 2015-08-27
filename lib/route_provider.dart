@@ -1,37 +1,47 @@
 library route_provider;
 
 import 'dart:async';
-import 'dart:io';
 import 'dart:convert';
-
+import 'dart:io';
 import 'package:mime_type/mime_type.dart';
 
 part 'src/route_controller.dart';
 part 'src/response_handler.dart';
 part 'src/errors/route_error.dart';
-
 part 'src/responsehandlers/file_response.dart';
+part 'src/responsehandlers/JsonResponse.dart';
+part 'src/controllers/RestApiController.dart';
 
 class RouteProvider {
     HttpServer server;
     Map cfg;
-    Map<String, Map> routeControllers = new Map();
+    Map<String, RouteController> controllers = new Map();
+    Map<String, ResponseHandler> responsers = new Map();
     String basePath = new File(Platform.script.toFilePath()).parent.path;
 
     RouteProvider(this.server, this.cfg);
 
-    void route(Map routeConfig) {
-        if (routeConfig.containsKey('url')) {
-            String url = routeConfig["url"];
-            this.routeControllers[url] = routeConfig;
+    void route({
+        String url: "/",
+        RouteController controller,
+        ResponseHandler responser
+    }) {
+        if (controller == null) {
+            controller = new EmptyRouteController();
         }
+        this.controllers[url] = controller;
+        this.responsers[url] = responser;
     }
 
     void start() {
         server.listen(this.handleRequest);
     }
 
-    void handleRequest(HttpRequest request) async {
+    void stop() {
+        server.close();
+    }
+
+    Future handleRequest(HttpRequest request) async {
         String path = request.uri.path;
 
         // direct cancels
@@ -44,14 +54,11 @@ class RouteProvider {
         }
 
         // route has a config?
-        if (this.routeControllers.containsKey(path)) {
+        if (this.controllers.containsKey(path)) {
             Map params = null;
 
-            //get config of this route
-            Map routeConfig = this.routeControllers[path];
-
-            RouteController controller = routeConfig["controller"];
-            ResponseHandler responseHandler = routeConfig["response"];
+            RouteController controller = this.controllers[path];
+            ResponseHandler responseHandler = this.responsers[path];
 
             //create vars for the template
             try{
@@ -75,7 +82,7 @@ class RouteProvider {
             //try to handle urls with inner-vars
             String comparedUrl = null;
             Map comparedUrlParams = null;
-            for(var key in this.routeControllers.keys) {
+            for(var key in this.controllers.keys) {
                 Map test = this.compareUrlPattern(path, key);
                 if(test != null){
                     comparedUrlParams= test;
@@ -86,11 +93,8 @@ class RouteProvider {
             if(comparedUrlParams!=null){
 
                 // found url
-                //get config of this route
-                Map routeConfig = this.routeControllers[comparedUrl];
-
-                RouteController controller = routeConfig["controller"];
-                ResponseHandler responseHandler = routeConfig["response"];
+                RouteController controller = this.controllers[comparedUrl];
+                ResponseHandler responseHandler = this.responsers[comparedUrl];
 
                 //create vars for the template
                 try{
@@ -139,7 +143,7 @@ class RouteProvider {
                         ..write('Not found')
                         ..close();
                 }
-            } 
+            }
         }
     }
 
