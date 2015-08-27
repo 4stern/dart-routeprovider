@@ -1,6 +1,7 @@
 library route_provider;
 
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 import 'package:mime_type/mime_type.dart';
 
