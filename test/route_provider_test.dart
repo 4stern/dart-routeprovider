@@ -14,10 +14,10 @@ void main() async {
         "defaultRoute":"/",
         "staticContentRoot":"/docroot"
     })
-    ..route({
-        "url": "/",
-        "controller": new RouteControllerEmpty(),
-        "response": new FileResponse("docroot/home.html")
-    })
+    ..route(
+        // url: "/",
+        // controller: new EmptyRouteController(),
+        responser: new FileResponse("docroot/home.html")
+    )
     ..start();
 }

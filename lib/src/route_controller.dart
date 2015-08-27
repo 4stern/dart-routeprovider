@@ -12,4 +12,4 @@ abstract class RouteController {
 /**
  * Empty implementation of RouteController
  */
-class RouteControllerEmpty extends RouteController {}
+class EmptyRouteController extends RouteController {}
