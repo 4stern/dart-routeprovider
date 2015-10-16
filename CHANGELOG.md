@@ -1,5 +1,8 @@
+## 0.3.1 (2015-10-16)
+- parsing http-request and params to auth handler
+
 ## 0.3.0 (2015-10-16)
-- add the optional named parameter 'auth' (interface Auth) to the route method for authentication possibilities. it checks before the controller and responsehandler do there work if the call is authenticated - default is true. 
+- add the optional named parameter 'auth' (interface Auth) to the route method for authentication possibilities. it checks before the controller and responsehandler do there work if the call is authenticated - default is true.
 
 ## 0.2.0 (2015-08-27)
 - rename RouteControllerEmpty to EmptyRouteController
