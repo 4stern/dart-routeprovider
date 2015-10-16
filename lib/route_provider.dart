@@ -70,7 +70,7 @@ class RouteProvider {
 
             //create vars for the template
             try{
-                if (await auth.isAuthed() == true) {
+                if (await auth.isAuthed(request, params) == true) {
                     var templateVars = await controller.execute(request, params);
                     await responseHandler.response(request, templateVars);
                 } else {
@@ -110,7 +110,7 @@ class RouteProvider {
 
                 //create vars for the template
                 try{
-                    if (await auth.isAuthed() == true) {
+                    if (await auth.isAuthed(request, comparedUrlParams) == true) {
                         var templateVars = await controller.execute(request, comparedUrlParams);
                         await responseHandler.response(request, templateVars);
                     } else {
