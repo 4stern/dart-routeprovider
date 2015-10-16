@@ -1,3 +1,6 @@
+## 0.3.2 (2015-10-16)
+- update tests
+
 ## 0.3.1 (2015-10-16)
 - parsing http-request and params to auth handler
 
