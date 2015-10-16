@@ -70,8 +70,9 @@ class RouteProvider {
 
             //create vars for the template
             try{
-                if (await auth.isAuthed(request, params) == true) {
-                    var templateVars = await controller.execute(request, params);
+                AuthResponse authResponse = await auth.isAuthed(request, params);
+                if (authResponse != null) {
+                    var templateVars = await controller.execute(request, params, authResponse: authResponse);
                     await responseHandler.response(request, templateVars);
                 } else {
                     throw new RouteError(HttpStatus.FORBIDDEN, "Auth failed");
@@ -110,8 +111,9 @@ class RouteProvider {
 
                 //create vars for the template
                 try{
-                    if (await auth.isAuthed(request, comparedUrlParams) == true) {
-                        var templateVars = await controller.execute(request, comparedUrlParams);
+                    AuthResponse authResponse = await auth.isAuthed(request, comparedUrlParams);
+                    if (authResponse != null) {
+                        var templateVars = await controller.execute(request, comparedUrlParams, authResponse: authResponse);
                         await responseHandler.response(request, templateVars);
                     } else {
                         throw new RouteError(HttpStatus.FORBIDDEN, "Auth failed");

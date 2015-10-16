@@ -1,3 +1,6 @@
+## 0.3.3 (2015-10-16)
+- change auth signature and handling
+
 ## 0.3.2 (2015-10-16)
 - update tests
 

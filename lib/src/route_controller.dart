@@ -75,7 +75,7 @@ abstract class RouteController {
         return data;
     }
 
-    Future<Map> execute(HttpRequest request, Map params) async  {
+    Future<Map> execute(HttpRequest request, Map params, {AuthResponse authResponse: null}) async  {
         Map map = new Map();
         return map;
     }
