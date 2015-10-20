@@ -18,6 +18,12 @@ class APIController extends RestApiController {
     }
 }
 
+class MyAuth implements Auth {
+    bool authed = false;
+    MyAuth({this.authed : false});
+    Future<AuthResponse> isAuthed(HttpRequest request, Map params) async => this.authed ? new AuthResponse() : null;
+}
+
 Future main() async {
 
     HttpServer server = await HttpServer.bind(InternetAddress.LOOPBACK_IP_V4, 4040);
@@ -33,17 +39,26 @@ Future main() async {
     ..route(
         // url: "/",
         // controller: new EmptyRouteController(),
-        responser: new FileResponse("docroot/home.html")
+        responser: new FileResponse("docroot/home.html"),
+        auth: new MyAuth(authed: true)
     )
     ..route(
         url: "/error",
         controller: new RouteControllerError(),
-        responser: new FileResponse("docroot/home.html")
+        responser: new FileResponse("docroot/home.html"),
+        auth: new MyAuth(authed: true)
     )
     ..route(
         url: "/error2",
         controller: new APIController(),
-        responser: new FileResponse("docroot/home.html")
+        responser: new FileResponse("docroot/home.html"),
+        auth: new MyAuth(authed: true)
+    )
+    ..route(
+        url: "/noauth",
+        controller: new APIController(),
+        responser: new FileResponse("docroot/home.html"),
+        auth: new MyAuth(authed: false)
     )
     ..start();
 

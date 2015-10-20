@@ -11,12 +11,14 @@ part 'src/errors/route_error.dart';
 part 'src/responsehandlers/file_response.dart';
 part 'src/responsehandlers/JsonResponse.dart';
 part 'src/controllers/RestApiController.dart';
+part 'src/auth/AuthInterface.dart';
 
 class RouteProvider {
     HttpServer server;
     Map cfg;
-    Map<String, RouteController> controllers = new Map();
-    Map<String, ResponseHandler> responsers = new Map();
+    Map<String, RouteController> controllers = new Map<String, RouteController>();
+    Map<String, ResponseHandler> responsers = new Map<String, ResponseHandler>();
+    Map<String, Auth> auths = new Map<String, Auth>();
     String basePath = new File(Platform.script.toFilePath()).parent.path;
 
     RouteProvider(this.server, this.cfg);
@@ -24,13 +26,18 @@ class RouteProvider {
     void route({
         String url: "/",
         RouteController controller,
-        ResponseHandler responser
+        ResponseHandler responser,
+        Auth auth
     }) {
         if (controller == null) {
             controller = new EmptyRouteController();
         }
+        if (auth == null) {
+            auth = new StaticAuth(authed: true);
+        }
         this.controllers[url] = controller;
         this.responsers[url] = responser;
+        this.auths[url] = auth;
     }
 
     void start() {
@@ -59,12 +66,17 @@ class RouteProvider {
 
             RouteController controller = this.controllers[path];
             ResponseHandler responseHandler = this.responsers[path];
+            Auth auth = this.auths[path];
 
             //create vars for the template
             try{
-                var templateVars = await controller.execute(request, params);
-                await responseHandler.response(request, templateVars);
-
+                AuthResponse authResponse = await auth.isAuthed(request, params);
+                if (authResponse != null) {
+                    var templateVars = await controller.execute(request, params, authResponse: authResponse);
+                    await responseHandler.response(request, templateVars);
+                } else {
+                    throw new RouteError(HttpStatus.FORBIDDEN, "Auth failed");
+                }
             } on RouteError catch(routeError) {
                 request.response.statusCode = routeError.getStatus();
                 request.response
@@ -95,12 +107,17 @@ class RouteProvider {
                 // found url
                 RouteController controller = this.controllers[comparedUrl];
                 ResponseHandler responseHandler = this.responsers[comparedUrl];
+                Auth auth = this.auths[comparedUrl];
 
                 //create vars for the template
                 try{
-                    var templateVars = await controller.execute(request, comparedUrlParams);
-                    await responseHandler.response(request, templateVars);
-
+                    AuthResponse authResponse = await auth.isAuthed(request, comparedUrlParams);
+                    if (authResponse != null) {
+                        var templateVars = await controller.execute(request, comparedUrlParams, authResponse: authResponse);
+                        await responseHandler.response(request, templateVars);
+                    } else {
+                        throw new RouteError(HttpStatus.FORBIDDEN, "Auth failed");
+                    }
                 } on RouteError catch(routeError) {
                     print("route_rpvoder: routeError");
                     print(routeError.getMessage());
