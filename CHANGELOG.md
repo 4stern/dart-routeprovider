@@ -1,3 +1,6 @@
+## 0.3.4 (2015-10-21)
+- add AuthResponse to ApiRestController
+
 ## 0.3.3 (2015-10-16)
 - change auth signature and handling
 
