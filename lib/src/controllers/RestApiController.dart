@@ -4,65 +4,65 @@ abstract class RestApiController extends RouteController {
 
     RestApiController();
 
-    Future<Map> onOptions(HttpRequest request, Map params) async {
+    Future<Map> onOptions(HttpRequest request, Map params, {AuthResponse authResponse: null}) async {
         throw new RouteError(HttpStatus.INTERNAL_SERVER_ERROR, 'Not supported');
     }
-    Future<Map> onGet(HttpRequest request, Map params) async {
+    Future<Map> onGet(HttpRequest request, Map params, {AuthResponse authResponse: null}) async {
         throw new RouteError(HttpStatus.INTERNAL_SERVER_ERROR, 'Not supported');
     }
-    Future<Map> onHead(HttpRequest request, Map params) async {
+    Future<Map> onHead(HttpRequest request, Map params, {AuthResponse authResponse: null}) async {
         throw new RouteError(HttpStatus.INTERNAL_SERVER_ERROR, 'Not supported');
     }
-    Future<Map> onPost(HttpRequest request, Map params) async {
+    Future<Map> onPost(HttpRequest request, Map params, {AuthResponse authResponse: null}) async {
         throw new RouteError(HttpStatus.INTERNAL_SERVER_ERROR, 'Not supported');
     }
-    Future<Map> onPut(HttpRequest request, Map params) async {
+    Future<Map> onPut(HttpRequest request, Map params, {AuthResponse authResponse: null}) async {
         throw new RouteError(HttpStatus.INTERNAL_SERVER_ERROR, 'Not supported');
     }
-    Future<Map> onDelete(HttpRequest request, Map params) async {
+    Future<Map> onDelete(HttpRequest request, Map params, {AuthResponse authResponse: null}) async {
         throw new RouteError(HttpStatus.INTERNAL_SERVER_ERROR, 'Not supported');
     }
-    Future<Map> onTrace(HttpRequest request, Map params) async {
+    Future<Map> onTrace(HttpRequest request, Map params, {AuthResponse authResponse: null}) async {
         throw new RouteError(HttpStatus.INTERNAL_SERVER_ERROR, 'Not supported');
     }
-    Future<Map> onConnect(HttpRequest request, Map params) async {
+    Future<Map> onConnect(HttpRequest request, Map params, {AuthResponse authResponse: null}) async {
         throw new RouteError(HttpStatus.INTERNAL_SERVER_ERROR, 'Not supported');
     }
-    Future<Map> onDefault(HttpRequest request, Map params) async {
+    Future<Map> onDefault(HttpRequest request, Map params, {AuthResponse authResponse: null}) async {
         throw new RouteError(HttpStatus.INTERNAL_SERVER_ERROR, 'Not supported');
     }
 
-    Future<Map> execute(HttpRequest request, Map params) async {
+    Future<Map> execute(HttpRequest request, Map params, {AuthResponse authResponse: null}) async {
         try {
 
             String method = request.method.toUpperCase();
             switch (method) {
                 case "OPTIONS":
-                    return await this.onOptions(request, params);
+                    return await this.onOptions(request, params, authResponse: authResponse);
 
                 case "GET":
-                    return await this.onGet(request, params);
+                    return await this.onGet(request, params, authResponse: authResponse);
 
                 case "HEAD":
-                    return await this.onHead(request, params);
+                    return await this.onHead(request, params, authResponse: authResponse);
 
                 case "POST":
-                    return await this.onPost(request, params);
+                    return await this.onPost(request, params, authResponse: authResponse);
 
                 case "PUT":
-                    return await this.onPut(request, params);
+                    return await this.onPut(request, params, authResponse: authResponse);
 
                 case "DELETE":
-                    return await this.onDelete(request, params);
+                    return await this.onDelete(request, params, authResponse: authResponse);
 
                 case "TRACE":
-                    return await this.onTrace(request, params);
+                    return await this.onTrace(request, params, authResponse: authResponse);
 
                 case "CONNECT":
-                    return await this.onConnect(request, params);
+                    return await this.onConnect(request, params, authResponse: authResponse);
 
                 default:
-                    return await this.onDefault(request, params);
+                    return await this.onDefault(request, params, authResponse: authResponse);
             }
 
         } on RouteError catch (error, stacktrace) {
