@@ -1,3 +1,6 @@
+## 0.3.6 (2016-05-13)
+- add WebSocketController for handle websockets
+
 ## 0.3.5 (2016-05-13)
 - add NoneResponse responsehandler
 
