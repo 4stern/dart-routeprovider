@@ -1,3 +1,6 @@
+## 0.3.5 (2016-05-13)
+- add NoneResponse responsehandler
+
 ## 0.3.4 (2015-10-21)
 - add AuthResponse to ApiRestController
 
