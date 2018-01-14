@@ -1,6 +1,7 @@
-## 0.3.7 (2018-01-14)
+## 1.0.0 (2018-01-14)
 - add RedirectResponse to make simple redirects
 - dependency upgrade: increase mime_type to version 0.2.1
+- add enviroment sdk constraint to dart ">=1.8.0 <2.0.0"
 
 ## 0.3.6 (2016-05-13)
 - add WebSocketController for handle websockets
