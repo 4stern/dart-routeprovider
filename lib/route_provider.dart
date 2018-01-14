@@ -11,6 +11,7 @@ part 'src/errors/route_error.dart';
 part 'src/responsehandlers/file_response.dart';
 part 'src/responsehandlers/JsonResponse.dart';
 part 'src/responsehandlers/NoneResponse.dart';
+part 'src/responsehandlers/RedirectResponse.dart';
 part 'src/controllers/RestApiController.dart';
 part 'src/controllers/WebSocketController.dart';
 part 'src/auth/AuthInterface.dart';
