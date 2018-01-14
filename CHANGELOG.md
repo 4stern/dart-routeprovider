@@ -1,3 +1,6 @@
+## 1.0.1 (2018-01-14)
+- remove basepath handling while static-content detection
+
 ## 1.0.0 (2018-01-14)
 - add RedirectResponse to make simple redirects
 - dependency upgrade: increase mime_type to version 0.2.1

@@ -22,7 +22,6 @@ class RouteProvider {
     Map<String, RouteController> controllers = new Map<String, RouteController>();
     Map<String, ResponseHandler> responsers = new Map<String, ResponseHandler>();
     Map<String, Auth> auths = new Map<String, Auth>();
-    String basePath = new File(Platform.script.toFilePath()).parent.path;
 
     RouteProvider(this.server, this.cfg);
 
@@ -141,7 +140,7 @@ class RouteProvider {
 
                 //try to find the file with the default file-response-handler
                 if (this.cfg.containsKey('staticContentRoot')) {
-                    String filePath = basePath + this.cfg['staticContentRoot'] + path;
+                    String filePath = this.cfg['staticContentRoot'] + path;
 
                     filePath = filePath.replaceAll('/', Platform.pathSeparator);
                     filePath = filePath.replaceAll(Platform.pathSeparator+Platform.pathSeparator, Platform.pathSeparator);
