@@ -5,31 +5,31 @@ abstract class RestApiController extends RouteController {
     RestApiController();
 
     Future<Map> onOptions(HttpRequest request, Map params, {AuthResponse authResponse: null}) async {
-        throw new RouteError(HttpStatus.INTERNAL_SERVER_ERROR, 'Not supported');
+        throw new RouteError(HttpStatus.internalServerError, 'Not supported');
     }
     Future<Map> onGet(HttpRequest request, Map params, {AuthResponse authResponse: null}) async {
-        throw new RouteError(HttpStatus.INTERNAL_SERVER_ERROR, 'Not supported');
+        throw new RouteError(HttpStatus.internalServerError, 'Not supported');
     }
     Future<Map> onHead(HttpRequest request, Map params, {AuthResponse authResponse: null}) async {
-        throw new RouteError(HttpStatus.INTERNAL_SERVER_ERROR, 'Not supported');
+        throw new RouteError(HttpStatus.internalServerError, 'Not supported');
     }
     Future<Map> onPost(HttpRequest request, Map params, {AuthResponse authResponse: null}) async {
-        throw new RouteError(HttpStatus.INTERNAL_SERVER_ERROR, 'Not supported');
+        throw new RouteError(HttpStatus.internalServerError, 'Not supported');
     }
     Future<Map> onPut(HttpRequest request, Map params, {AuthResponse authResponse: null}) async {
-        throw new RouteError(HttpStatus.INTERNAL_SERVER_ERROR, 'Not supported');
+        throw new RouteError(HttpStatus.internalServerError, 'Not supported');
     }
     Future<Map> onDelete(HttpRequest request, Map params, {AuthResponse authResponse: null}) async {
-        throw new RouteError(HttpStatus.INTERNAL_SERVER_ERROR, 'Not supported');
+        throw new RouteError(HttpStatus.internalServerError, 'Not supported');
     }
     Future<Map> onTrace(HttpRequest request, Map params, {AuthResponse authResponse: null}) async {
-        throw new RouteError(HttpStatus.INTERNAL_SERVER_ERROR, 'Not supported');
+        throw new RouteError(HttpStatus.internalServerError, 'Not supported');
     }
     Future<Map> onConnect(HttpRequest request, Map params, {AuthResponse authResponse: null}) async {
-        throw new RouteError(HttpStatus.INTERNAL_SERVER_ERROR, 'Not supported');
+        throw new RouteError(HttpStatus.internalServerError, 'Not supported');
     }
     Future<Map> onDefault(HttpRequest request, Map params, {AuthResponse authResponse: null}) async {
-        throw new RouteError(HttpStatus.INTERNAL_SERVER_ERROR, 'Not supported');
+        throw new RouteError(HttpStatus.internalServerError, 'Not supported');
     }
 
     Future<Map> execute(HttpRequest request, Map params, {AuthResponse authResponse: null}) async {
@@ -73,7 +73,7 @@ abstract class RestApiController extends RouteController {
         } catch (error, stacktrace) {
             print(error.toString());
             print(stacktrace.toString());
-            throw new RouteError(HttpStatus.INTERNAL_SERVER_ERROR, 'Internal Server Error');
+            throw new RouteError(HttpStatus.internalServerError, 'Internal Server Error');
         }
     }
 }

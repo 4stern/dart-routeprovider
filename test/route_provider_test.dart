@@ -7,14 +7,14 @@ import 'package:route_provider/route_provider.dart';
 class RouteControllerError extends RouteController {
     RouteControllerError();
 
-    Future<Map> execute(HttpRequest request, Map params) async  {
-        throw new RouteError(HttpStatus.NOT_FOUND,"ERROR");
+    Future<Map> execute(HttpRequest request, Map params, {AuthResponse authResponse: null}) async  {
+        throw new RouteError(HttpStatus.notFound,"ERROR");
     }
 }
 
 class APIController extends RestApiController {
-    Future<Map> onGet(HttpRequest request, Map params) async {
-        throw new RouteError(HttpStatus.INTERNAL_SERVER_ERROR, 'Not supported');
+    Future<Map> onGet(HttpRequest request, Map params, {AuthResponse authResponse: null}) async {
+        throw new RouteError(HttpStatus.internalServerError, 'Not supported');
     }
 }
 
@@ -26,7 +26,7 @@ class MyAuth implements Auth {
 
 Future main() async {
 
-    HttpServer server = await HttpServer.bind(InternetAddress.LOOPBACK_IP_V4, 4040);
+    HttpServer server = await HttpServer.bind(InternetAddress.loopbackIPv4, 4040);
 
     print('listening on localhost, port ${server.port}');
 

@@ -19,7 +19,7 @@ abstract class WebSocketController extends RouteController {
         } catch (error, stacktrace) {
             print(error.toString());
             print(stacktrace.toString());
-            throw new RouteError(HttpStatus.INTERNAL_SERVER_ERROR, 'Internal Server Error');
+            throw new RouteError(HttpStatus.internalServerError, 'Internal Server Error');
         }
     }
 

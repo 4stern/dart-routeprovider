@@ -5,7 +5,7 @@ abstract class RouteController {
 
     Map _testJson(String data) {
         try {
-            return JSON.decode(data);
+            return json.decode(data);
 
         } on FormatException catch(error, stacktrace) {
             /* catching the expected Exeption with none-json data
@@ -32,7 +32,7 @@ abstract class RouteController {
             }
 
             // Split the query into pieces
-            List pieces = query.split("&").map((e) => e.split("="));
+            List pieces = query.split("&").map((e) => e.split("=")).toList();
 
             // Convert the pieces into a map
             Map params = {};
@@ -52,14 +52,14 @@ abstract class RouteController {
     Future<String> _getData(HttpRequest request) async {
         Completer _completer = new Completer();
         String bodyData = "";
-        request.transform(UTF8.decoder).listen((stream){
+        request.transform(utf8.decoder).listen((stream){
             bodyData += stream;
         },
         onDone:(){
             _completer.complete(bodyData);
         },
         onError:(error){
-            throw new RouteError(HttpStatus.INTERNAL_SERVER_ERROR, 'Internal Server Error');
+            throw new RouteError(HttpStatus.internalServerError, 'Internal Server Error');
         });
         return _completer.future;
     }

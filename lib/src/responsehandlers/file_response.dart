@@ -12,7 +12,7 @@ class FileResponse extends ResponseHandler {
             if(exists == true){
                 String mimeType = mime(fileName);
                 if (mimeType == null) mimeType = 'text/plain; charset=UTF-8';
-                request.response.headers.add(HttpHeaders.CONTENT_TYPE, mimeType);
+                request.response.headers.add(HttpHeaders.contentTypeHeader, mimeType);
 
                 StreamConsumer streamConsumer = request.response;
                 file.openRead().pipe(streamConsumer).then((streamConsumer){
@@ -20,7 +20,7 @@ class FileResponse extends ResponseHandler {
                 });
             } else {
                 request.response
-                    ..statusCode = HttpStatus.NOT_FOUND
+                    ..statusCode = HttpStatus.notFound
                     ..write('Not found')
                     ..close();
             }

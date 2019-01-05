@@ -57,7 +57,7 @@ class RouteProvider {
         if (path.contains('..') || path.contains(':')) {
             //404 not found
             request.response
-                ..statusCode = HttpStatus.NOT_FOUND
+                ..statusCode = HttpStatus.notFound
                 ..write('Not found')
                 ..close();
         }
@@ -77,7 +77,7 @@ class RouteProvider {
                     var templateVars = await controller.execute(request, params, authResponse: authResponse);
                     await responseHandler.response(request, templateVars);
                 } else {
-                    throw new RouteError(HttpStatus.FORBIDDEN, "Auth failed");
+                    throw new RouteError(HttpStatus.forbidden, "Auth failed");
                 }
             } on RouteError catch(routeError) {
                 request.response.statusCode = routeError.getStatus();
@@ -86,7 +86,7 @@ class RouteProvider {
                     ..close();
 
             } catch (error) {
-                request.response.statusCode = HttpStatus.INTERNAL_SERVER_ERROR;
+                request.response.statusCode = HttpStatus.internalServerError;
                 request.response
                     ..write(error)
                     ..close();
@@ -118,7 +118,7 @@ class RouteProvider {
                         var templateVars = await controller.execute(request, comparedUrlParams, authResponse: authResponse);
                         await responseHandler.response(request, templateVars);
                     } else {
-                        throw new RouteError(HttpStatus.FORBIDDEN, "Auth failed");
+                        throw new RouteError(HttpStatus.forbidden, "Auth failed");
                     }
                 } on RouteError catch(routeError) {
                     print("route_rpvoder: routeError");
@@ -131,7 +131,7 @@ class RouteProvider {
                 } catch (error) {
                     print("route_rpvoder: error");
                     print(error);
-                    request.response.statusCode = HttpStatus.INTERNAL_SERVER_ERROR;
+                    request.response.statusCode = HttpStatus.internalServerError;
                     request.response
                         ..write(error)
                         ..close();
@@ -151,14 +151,14 @@ class RouteProvider {
                     } catch (exception) {
                         //404 not found
                         request.response
-                            ..statusCode = HttpStatus.NOT_FOUND
+                            ..statusCode = HttpStatus.notFound
                             ..write('Not found')
                             ..close();
                     }
                 } else {
                     //404 not found
                     request.response
-                        ..statusCode = HttpStatus.NOT_FOUND
+                        ..statusCode = HttpStatus.notFound
                         ..write('Not found')
                         ..close();
                 }

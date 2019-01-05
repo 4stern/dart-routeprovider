@@ -1,3 +1,6 @@
+## 2.0.0 (2019-01-05)
+- change to dart 2.1.0
+
 ## 1.0.1 (2018-01-14)
 - remove basepath handling while static-content detection
 
