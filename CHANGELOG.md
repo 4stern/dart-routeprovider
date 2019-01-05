@@ -1,3 +1,6 @@
+## 2.0.4 (2019-01-06)
+- if auth if null, we send an 401 instead of 403 now
+
 ## 2.0.3 (2019-01-05)
 - Bugfixing
 

@@ -77,7 +77,7 @@ class RouteProvider {
                     var templateVars = await controller.execute(request, params, authResponse: authResponse);
                     await responseHandler.response(request, templateVars);
                 } else {
-                    throw new RouteError(HttpStatus.forbidden, "Auth failed");
+                    throw new RouteError(HttpStatus.unauthorized, "Auth failed");
                 }
             } on RouteError catch(routeError) {
                 request.response.statusCode = routeError.getStatus();
