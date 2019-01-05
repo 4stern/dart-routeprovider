@@ -7,4 +7,4 @@ homepage: http://github.com/4stern/dart-routeprovider
 dependencies:
   mime_type: "^0.2.1"
 environment:
-  sdk: "=2.1.0"
+  sdk: ">=2.1.0 <3.0.0"

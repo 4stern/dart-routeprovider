@@ -20,7 +20,7 @@ $ pub get
 import 'dart:io';
 import 'package:route_provider/route_provider.dart';
 main() {
-    HttpServer.bind(InternetAddress.LOOPBACK_IP_V4,8080).then((HttpServer server){
+    HttpServer.bind(InternetAddress.loopbackIPv4,8080).then((HttpServer server){
         new RouteProvider(server, {
             "defaultRoute":"/",
             "staticContentRoot":"/docroot"
