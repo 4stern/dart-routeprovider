@@ -3,7 +3,7 @@ library route_provider;
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
-import 'package:mime_type/mime_type.dart';
+// import 'package:mime_type/mime_type.dart'; // waiting that the package will increasted that dart2.0 will be supported -> https://github.com/mitsuoka/mime_type/pull/4
 
 part 'src/route_controller.dart';
 part 'src/response_handler.dart';
