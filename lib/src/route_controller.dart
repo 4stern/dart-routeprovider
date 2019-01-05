@@ -3,6 +3,7 @@ part of route_provider;
 abstract class RouteController {
     RouteController();
 
+
     Map _testJson(String data) {
         try {
             return json.decode(data);
@@ -10,8 +11,8 @@ abstract class RouteController {
         } on FormatException catch(error, stacktrace) {
             /* catching the expected Exeption with none-json data
              * therewhile no error messages logged */
-             stacktrace = stacktrace;/* only for suppress warnings */
-             error = error;/* only for suppress warnings */
+            error.toString(); /* only for suppress warnings */
+            stacktrace.toString(); /* only for suppress warnings */
             return null;
 
         } catch (error, stacktrace) {
@@ -39,13 +40,13 @@ abstract class RouteController {
             pieces.forEach((piece) => params[piece[0]] = piece[1]);
             return params;
         } on FormatException catch(error, stacktrace) {
-            stacktrace = stacktrace;/* only for suppress warnings */
-            error = error;/* only for suppress warnings */
+            error.toString(); /* only for suppress warnings */
+            stacktrace.toString(); /* only for suppress warnings */
             return null;
 
         } catch (error, stacktrace) {
-            stacktrace = stacktrace;/* only for suppress warnings */
-            error = error;/* only for suppress warnings */
+            error.toString(); /* only for suppress warnings */
+            stacktrace.toString(); /* only for suppress warnings */
             return null;
         }
     }

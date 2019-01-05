@@ -1,10 +1,13 @@
 name: route_provider
 description: >
   Provides routing for http-server from dart:io.
-version: 2.0.2
+version: 2.0.3
 author: Robert Beyer <4sternrb@googlemail.com>
 homepage: http://github.com/4stern/dart-routeprovider
 # dependencies:
 #   mime_type: "^0.2.2" # waiting that the package will increasted to this version that dart2.0 will be supported -> https://github.com/mitsuoka/mime_type/pull/4
+dev_dependencies:
+  build_web_compilers: '>=0.3.6 <2.0.0'
+  build_runner: '>=0.8.10 <2.0.0'
 environment:
   sdk: ">=2.1.0 <3.0.0"
