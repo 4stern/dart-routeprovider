@@ -1,3 +1,6 @@
+## 2.0.5 (2019-01-06)
+- dependency update: increase mime_type to version ^0.2.2
+
 ## 2.0.4 (2019-01-06)
 - if auth if null, we send an 401 instead of 403 now
 
