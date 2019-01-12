@@ -1,3 +1,6 @@
+## 3.1.0 (2019-01-13)
+- add FolderResponse Class
+
 ## 3.0.0 (2019-01-09)
 - static content is now handled on anonther way
 

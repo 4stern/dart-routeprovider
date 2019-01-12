@@ -73,8 +73,7 @@ class RouteProvider {
         String path = request.uri.path;
         RouteBundle bundle;
         Map params;
-print('incomming $path');
-print('.. ${request.requestedUri}');
+
         // direct cancels
         if (path.contains('..') || path.contains(':')) {
             _send404(request);
