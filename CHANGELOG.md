@@ -1,3 +1,6 @@
+## 3.0.0 (2019-01-09)
+- static content is now handled on anonther way
+
 ## 2.0.5 (2019-01-06)
 - dependency update: increase mime_type to version ^0.2.2
 

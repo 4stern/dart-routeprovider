@@ -8,7 +8,8 @@ import 'package:mime_type/mime_type.dart'; // waiting that the package will incr
 part 'src/route_controller.dart';
 part 'src/response_handler.dart';
 part 'src/errors/route_error.dart';
-part 'src/responsehandlers/file_response.dart';
+part 'src/responsehandlers/FileResponse.dart';
+part 'src/responsehandlers/FolderResponse.dart';
 part 'src/responsehandlers/JsonResponse.dart';
 part 'src/responsehandlers/NoneResponse.dart';
 part 'src/responsehandlers/RedirectResponse.dart';
@@ -16,30 +17,48 @@ part 'src/controllers/RestApiController.dart';
 part 'src/controllers/WebSocketController.dart';
 part 'src/auth/AuthInterface.dart';
 
+class RouteBundle {
+    RouteController controller;
+    ResponseHandler responser;
+    Auth auth;
+    RouteBundle(this.controller, this.responser, this.auth);
+}
+
 class RouteProvider {
     HttpServer server;
-    Map cfg;
-    Map<String, RouteController> controllers = new Map<String, RouteController>();
-    Map<String, ResponseHandler> responsers = new Map<String, ResponseHandler>();
-    Map<String, Auth> auths = new Map<String, Auth>();
+    String basePath;
 
-    RouteProvider(this.server, this.cfg);
+    Map<String, RouteBundle> _calls = new Map<String, RouteBundle>();
+    Map<String, RouteBundle> _folders = new Map<String, RouteBundle>();
+
+    RouteProvider(this.server, {this.basePath: ''});
 
     void route({
-        String url: "/",
+        String url,
         RouteController controller,
         ResponseHandler responser,
         Auth auth
     }) {
+        ArgumentError.checkNotNull(url);
+
         if (controller == null) {
             controller = new EmptyRouteController();
         }
         if (auth == null) {
             auth = new StaticAuth(authed: true);
         }
-        this.controllers[url] = controller;
-        this.responsers[url] = responser;
-        this.auths[url] = auth;
+
+        String realPath = this.basePath + url;
+        if (responser is FolderResponse) {
+            String normalizedRealPath = realPath.replaceAll('*', '');
+            print('added a folder ${normalizedRealPath}');
+            responser.urlPattern = normalizedRealPath;
+            responser.recursive = realPath.contains('/**');
+
+            _folders[normalizedRealPath] = new RouteBundle(controller, responser, auth);
+        } else {
+            _calls[realPath] = new RouteBundle(controller, responser, auth);
+        }
     }
 
     void start() {
@@ -52,121 +71,113 @@ class RouteProvider {
 
     Future handleRequest(HttpRequest request) async {
         String path = request.uri.path;
-
+        RouteBundle bundle;
+        Map params;
+print('incomming $path');
+print('.. ${request.requestedUri}');
         // direct cancels
         if (path.contains('..') || path.contains(':')) {
-            //404 not found
-            request.response
-                ..statusCode = HttpStatus.notFound
-                ..write('Not found')
-                ..close();
-        }
-
-        // route has a config?
-        if (this.controllers.containsKey(path)) {
-            Map params = null;
-
-            RouteController controller = this.controllers[path];
-            ResponseHandler responseHandler = this.responsers[path];
-            Auth auth = this.auths[path];
-
-            //create vars for the template
-            try{
-                AuthResponse authResponse = await auth.isAuthed(request, params);
-                if (authResponse != null) {
-                    var templateVars = await controller.execute(request, params, authResponse: authResponse);
-                    await responseHandler.response(request, templateVars);
-                } else {
-                    throw new RouteError(HttpStatus.unauthorized, "Auth failed");
-                }
-            } on RouteError catch(routeError) {
-                request.response.statusCode = routeError.getStatus();
-                request.response
-                    ..write(routeError.getMessage())
-                    ..close();
-
-            } catch (error) {
-                request.response.statusCode = HttpStatus.internalServerError;
-                request.response
-                    ..write(error)
-                    ..close();
-            }
+            _send404(request);
         } else {
+            if (bundle == null) {
+                bundle = checkForDirectUrls(path);
+            }
 
-            //try to handle urls with inner-vars
-            String comparedUrl = null;
-            Map comparedUrlParams = null;
-            for(var key in this.controllers.keys) {
-                Map test = this.compareUrlPattern(path, key);
-                if(test != null){
-                    comparedUrlParams= test;
-                    comparedUrl = key;
-                    break;
+            if (bundle == null) {
+                bundle = checkForFolders(path);
+            }
+
+            if (bundle == null) {
+                Map<String, Object> result = checkForParameterizedUrl(path);
+                if (result != null) {
+                    bundle = result['bundle'];
+                    params = result['params'];
                 }
-            };
-            if(comparedUrlParams!=null){
+            }
 
-                // found url
-                RouteController controller = this.controllers[comparedUrl];
-                ResponseHandler responseHandler = this.responsers[comparedUrl];
-                Auth auth = this.auths[comparedUrl];
-
-                //create vars for the template
-                try{
-                    AuthResponse authResponse = await auth.isAuthed(request, comparedUrlParams);
-                    if (authResponse != null) {
-                        var templateVars = await controller.execute(request, comparedUrlParams, authResponse: authResponse);
-                        await responseHandler.response(request, templateVars);
-                    } else {
-                        throw new RouteError(HttpStatus.forbidden, "Auth failed");
-                    }
-                } on RouteError catch(routeError) {
-                    print("route_rpvoder: routeError");
-                    print(routeError.getMessage());
-                    request.response.statusCode = routeError.getStatus();
-                    request.response
-                        ..write(routeError.getMessage())
-                        ..close();
-
-                } catch (error) {
-                    print("route_rpvoder: error");
-                    print(error);
-                    request.response.statusCode = HttpStatus.internalServerError;
-                    request.response
-                        ..write(error)
-                        ..close();
-                }
+            if (bundle != null) {
+                await _executeResponse(request, params, bundle);
             } else {
-
-                //try to find the file with the default file-response-handler
-                if (this.cfg.containsKey('staticContentRoot')) {
-                    String filePath = this.cfg['staticContentRoot'] + path;
-
-                    filePath = filePath.replaceAll('/', Platform.pathSeparator);
-                    filePath = filePath.replaceAll(Platform.pathSeparator+Platform.pathSeparator, Platform.pathSeparator);
-
-                    try {
-                        FileResponse fr = new FileResponse(filePath);
-                        fr.response(request, {});
-                    } catch (exception) {
-                        //404 not found
-                        request.response
-                            ..statusCode = HttpStatus.notFound
-                            ..write('Not found')
-                            ..close();
-                    }
-                } else {
-                    //404 not found
-                    request.response
-                        ..statusCode = HttpStatus.notFound
-                        ..write('Not found')
-                        ..close();
-                }
+                _send404(request);
             }
         }
     }
 
-    Map compareUrlPattern(String url, String urlPattern){
+    RouteBundle checkForDirectUrls(path) => _calls.containsKey(path) ? _calls[path] : null;
+    RouteBundle checkForFolders(path) {
+        // String folderKey = _folders.keys.firstWhere((folderPaths) => path.startsWith(folderPaths) && !path.endsWith('/'), orElse: () => null);
+        // return folderKey != null ? _folders[folderKey] : null;
+
+        List<String> possibleFolders = _folders.keys.where((folderPaths) => path.startsWith(folderPaths) && !path.endsWith('/')).toList();
+        print(possibleFolders);
+        if (possibleFolders.length == 0) {
+            return null;
+        } else if (possibleFolders.length == 1) {
+            return _folders[possibleFolders.first];
+        } else {
+            String moreSpecializedElement = possibleFolders.reduce((value, element) {
+                return value.split('/').length > element.split('/').length ? value : element;
+            });
+            print('choose this $moreSpecializedElement');
+            return _folders[moreSpecializedElement];
+        }
+    }
+
+    Map<String, Object> checkForParameterizedUrl(String path) {
+        String url = null;
+        Map params = null;
+
+        for (var key in _calls.keys) {
+            Map compareResult = this._compareUrlPattern(path, key);
+            if (compareResult != null) {
+                params = compareResult;
+                url = key;
+                break;
+            }
+        };
+
+        if (url != null) {
+            return {
+                'bundle': _calls[url],
+                'params': params
+            };
+        } else {
+            return null;
+        }
+    }
+
+    void _send404(HttpRequest request) {
+        //404 not found
+        request.response
+            ..statusCode = HttpStatus.notFound
+            ..write('Not found')
+            ..close();
+    }
+
+    void _executeResponse(HttpRequest request, Map params, RouteBundle bundle) async {
+        try{
+            AuthResponse authResponse = await bundle.auth.isAuthed(request, params);
+            if (authResponse != null) {
+                var templateVars = await bundle.controller.execute(request, params, authResponse: authResponse);
+                await bundle.responser.response(request, templateVars);
+            } else {
+                throw new RouteError(HttpStatus.unauthorized, "Auth failed");
+            }
+        } on RouteError catch(routeError) {
+            request.response.statusCode = routeError.getStatus();
+            request.response
+                ..write(routeError.getMessage())
+                ..close();
+
+        } catch (error) {
+            request.response.statusCode = HttpStatus.internalServerError;
+            request.response
+                ..write(error)
+                ..close();
+        }
+    }
+
+    Map _compareUrlPattern(String url, String urlPattern) {
         List requestedUrl = url.split("/");
         List patternUrl = urlPattern.split("/");
         int countIdent = 0;
@@ -178,14 +189,15 @@ class RouteProvider {
                 bool doublePoint = patternUrl[i].startsWith(":");
                 if ( requestedUrl[i] == patternUrl[i] || doublePoint==true ) {
                     countIdent++;
-                    if(doublePoint==true){
+                    if (doublePoint==true) {
                         matchedResult[patternUrl[i].substring(1)] = requestedUrl[i];
                     }
                 }
             }
             matched = countIdent == requestedUrl.length;
         }
-        if(matched == true){
+
+        if (matched == true) {
             return matchedResult;
         } else {
             return null;

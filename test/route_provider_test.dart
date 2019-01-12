@@ -31,31 +31,47 @@ Future main() async {
     print('listening on localhost, port ${server.port}');
 
     //start webserver
-    RouteProvider provider = new RouteProvider(server, {
-        "defaultRoute":"/",
-        "staticContentRoot":"/docroot"
-    })
+    new RouteProvider(server)
 
     ..route(
-        // url: "/",
-        // controller: new EmptyRouteController(),
+        url: '/',
         responser: new FileResponse("docroot/home.html"),
         auth: new MyAuth(authed: true)
     )
     ..route(
-        url: "/error",
+        url: '/',
+        responser: new FolderResponse("docroot/"),
+        auth: new MyAuth(authed: true)
+    )
+    ..route(
+        url: '/img',
+        responser: new FolderResponse("docroot/assets/img"),
+        auth: new MyAuth(authed: true)
+    )
+    ..route(
+        url: '/assets/**',
+        responser: new FolderResponse("docroot/assets/"),
+        auth: new MyAuth(authed: true)
+    )
+    ..route(
+        url: '/js/**',
+        responser: new FolderResponse("docroot/code/"),
+        auth: new MyAuth(authed: true)
+    )
+    ..route(
+        url: '/error',
         controller: new RouteControllerError(),
         responser: new FileResponse("docroot/home.html"),
         auth: new MyAuth(authed: true)
     )
     ..route(
-        url: "/error2",
+        url: '/error2',
         controller: new APIController(),
         responser: new FileResponse("docroot/home.html"),
         auth: new MyAuth(authed: true)
     )
     ..route(
-        url: "/noauth",
+        url: '/noauth',
         controller: new APIController(),
         responser: new FileResponse("docroot/home.html"),
         auth: new MyAuth(authed: false)
@@ -64,5 +80,5 @@ Future main() async {
 
     //perform more tests here
 
-    provider.stop();
+    // provider.stop();
 }
