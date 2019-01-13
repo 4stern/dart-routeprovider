@@ -24,6 +24,12 @@ class RouteBundle {
   RouteBundle(this.controller, this.responser, this.auth);
 }
 
+class ParameterizedResult {
+    RouteBundle bundle;
+    Map params;
+    ParameterizedResult({this.bundle, this.params});
+}
+
 class RouteProvider {
   HttpServer server;
   String basePath;
@@ -86,10 +92,10 @@ class RouteProvider {
       }
 
       if (bundle == null) {
-        Map<String, Object> result = checkForParameterizedUrl(path);
+        ParameterizedResult result = checkForParameterizedUrl(path);
         if (result != null) {
-          bundle = result['bundle'];
-          params = result['params'];
+          bundle = result.bundle;
+          params = result.params;
         }
       }
 
@@ -103,13 +109,11 @@ class RouteProvider {
 
   RouteBundle checkForDirectUrls(path) =>
       _calls.containsKey(path) ? _calls[path] : null;
-  RouteBundle checkForFolders(path) {
-    // String folderKey = _folders.keys.firstWhere((folderPaths) => path.startsWith(folderPaths) && !path.endsWith('/'), orElse: () => null);
-    // return folderKey != null ? _folders[folderKey] : null;
 
+  RouteBundle checkForFolders(path) {
     List<String> possibleFolders = _folders.keys
         .where((folderPaths) =>
-            path.startsWith(folderPaths) && !path.endsWith('/'))
+            path.startsWith(folderPaths) == true && path.endsWith('/') == false)
         .toList();
     if (possibleFolders.length == 0) {
       return null;
@@ -125,9 +129,9 @@ class RouteProvider {
     }
   }
 
-  Map<String, Object> checkForParameterizedUrl(String path) {
-    String url = null;
-    Map params = null;
+  ParameterizedResult checkForParameterizedUrl(String path) {
+    String url;
+    Map params;
 
     for (var key in _calls.keys) {
       Map compareResult = this._compareUrlPattern(path, key);
@@ -139,7 +143,7 @@ class RouteProvider {
     }
 
     if (url != null) {
-      return {'bundle': _calls[url], 'params': params};
+      return new ParameterizedResult(bundle: _calls[url], params: params);
     } else {
       return null;
     }
@@ -190,7 +194,7 @@ class RouteProvider {
         if (requestedUrl[i] == patternUrl[i] || doublePoint == true) {
           countIdent++;
           if (doublePoint == true) {
-            matchedResult[patternUrl[i].substring(1)] = requestedUrl[i];
+            matchedResult[patternUrl[i].substring(1).toString()] = requestedUrl[i].toString();
           }
         }
       }

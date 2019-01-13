@@ -3,6 +3,7 @@ part of route_provider;
 class JsonResponse extends ResponseHandler {
   JsonResponse() : super();
 
+  @override
   Future response(HttpRequest request, Map vars) {
     try {
       if (vars != null) {

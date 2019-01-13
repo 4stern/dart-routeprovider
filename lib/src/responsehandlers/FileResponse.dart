@@ -5,6 +5,7 @@ class FileResponse extends ResponseHandler {
 
   FileResponse(this.filename) : super();
 
+  @override
   Future response(HttpRequest request, Map vars) async {
     String fileName = this.filename;
     var file = new File(fileName);
@@ -16,7 +17,7 @@ class FileResponse extends ResponseHandler {
       }
       request.response.headers.add(HttpHeaders.contentTypeHeader, mimeType);
 
-      StreamConsumer streamConsumer = request.response;
+      StreamConsumer<List<int>> streamConsumer = request.response;
       file.openRead().pipe(streamConsumer).then((streamConsumer) {
         streamConsumer.close();
       });

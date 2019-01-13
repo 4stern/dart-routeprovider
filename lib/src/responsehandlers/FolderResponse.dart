@@ -14,6 +14,7 @@ class FolderResponse extends ResponseHandler {
     }
   }
 
+  @override
   Future response(HttpRequest request, Map vars) async {
     String path = request.uri.path;
     String filePath;

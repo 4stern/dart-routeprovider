@@ -3,7 +3,7 @@ part of route_provider;
 abstract class RouteController {
   RouteController();
 
-  Map _testJson(String data) {
+  dynamic _testJson(String data) {
     try {
       return json.decode(data);
     } on FormatException catch (error, stacktrace) {
@@ -47,7 +47,7 @@ abstract class RouteController {
   }
 
   Future<String> _getData(HttpRequest request) async {
-    Completer _completer = new Completer();
+    Completer<String> _completer = new Completer();
     String bodyData = "";
     request.transform(utf8.decoder).listen((stream) {
       bodyData += stream;
@@ -64,7 +64,10 @@ abstract class RouteController {
     String body = await this._getData(request);
     Map data;
     //testing stream format
-    data = this._testJson(body);
+    dynamic t = this._testJson(body);
+    if (t is Map) {
+        data = t;
+    }
     if (data == null) {
       data = this._testQuery(body);
     }
@@ -72,13 +75,11 @@ abstract class RouteController {
   }
 
   Future<Map> execute(HttpRequest request, Map params,
-      {AuthResponse authResponse: null}) async {
+      {AuthResponse authResponse}) async {
     Map map = new Map();
     return map;
   }
 }
 
-/**
- * Empty implementation of RouteController
- */
+/// Empty implementation of RouteController
 class EmptyRouteController extends RouteController {}

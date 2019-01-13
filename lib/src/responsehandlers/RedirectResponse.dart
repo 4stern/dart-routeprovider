@@ -6,6 +6,7 @@ class RedirectResponse extends ResponseHandler {
 
   RedirectResponse(this.routeUrl, this.httpStatus) : super();
 
+  @override
   Future response(HttpRequest request, Map vars) async {
     return request.response
         .redirect(Uri.parse(this.routeUrl), status: this.httpStatus);
