@@ -3,7 +3,7 @@ library route_provider;
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
-import 'package:mime_type/mime_type.dart'; // waiting that the package will increasted that dart2.0 will be supported -> https://github.com/mitsuoka/mime_type/pull/4
+import 'package:mime_type/mime_type.dart';
 
 part 'src/route_controller.dart';
 part 'src/response_handler.dart';
@@ -51,7 +51,6 @@ class RouteProvider {
         String realPath = this.basePath + url;
         if (responser is FolderResponse) {
             String normalizedRealPath = realPath.replaceAll('*', '');
-            print('added a folder ${normalizedRealPath}');
             responser.urlPattern = normalizedRealPath;
             responser.recursive = realPath.contains('/**');
 
@@ -108,7 +107,6 @@ class RouteProvider {
         // return folderKey != null ? _folders[folderKey] : null;
 
         List<String> possibleFolders = _folders.keys.where((folderPaths) => path.startsWith(folderPaths) && !path.endsWith('/')).toList();
-        print(possibleFolders);
         if (possibleFolders.length == 0) {
             return null;
         } else if (possibleFolders.length == 1) {
@@ -117,7 +115,6 @@ class RouteProvider {
             String moreSpecializedElement = possibleFolders.reduce((value, element) {
                 return value.split('/').length > element.split('/').length ? value : element;
             });
-            print('choose this $moreSpecializedElement');
             return _folders[moreSpecializedElement];
         }
     }

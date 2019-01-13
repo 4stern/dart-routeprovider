@@ -7,7 +7,12 @@ class FolderResponse extends ResponseHandler {
     String urlPattern;
     bool recursive;
 
-    FolderResponse(this.folderpath, {this.recursive = false}) : super();
+    FolderResponse(this.folderpath, {this.recursive = false}) : super() {
+        this.folderpath = folderpath;
+        if (this.folderpath.endsWith('/') == false) {
+            this.folderpath += '/';
+        }
+    }
 
     Future response(HttpRequest request, Map vars) async {
         String path = request.uri.path;

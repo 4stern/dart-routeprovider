@@ -1,3 +1,6 @@
+## 3.1.1 (2019-01-13)
+- bugfixing
+
 ## 3.1.0 (2019-01-13)
 - add FolderResponse Class
 
@@ -11,13 +14,13 @@
 - if auth if null, we send an 401 instead of 403 now
 
 ## 2.0.3 (2019-01-05)
-- Bugfixing
+- bugfixing
 
 ## 2.0.2 (2019-01-05)
-- Bugfixing
+- bugfixing
 
 ## 2.0.1 (2019-01-05)
-- Bugfixing
+- bugfixing
 
 ## 2.0.0 (2019-01-05)
 - change to dart 2.1.0

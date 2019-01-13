@@ -1,13 +1,11 @@
 # dart-routeprovider
 
-[![Join the chat at https://gitter.im/4stern/dart-routeprovider](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/4stern/dart-routeprovider?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) [![Build Status](https://drone.io/github.com/4stern/dart-routeprovider/status.png)](https://drone.io/github.com/4stern/dart-routeprovider/latest) [![Stories in Ready](https://badge.waffle.io/4stern/dart-routeprovider.png?label=ready&title=Ready)](https://waffle.io/4stern/dart-routeprovider)
-
 ## Installation
 
 Add it to your dependencies
 ```
 dependencies:
-  route_provider: any
+  route_provider: ^3.1.1
 ```
 
 and install the package
@@ -20,22 +18,31 @@ $ pub get
 import 'dart:io';
 import 'package:route_provider/route_provider.dart';
 main() {
+    Auth freeForAll = new StaticAuth(authed: true);
+    Auth userAuth = new MyAuth();
+    Responser jsonResponser = new JsonResponse();
     HttpServer.bind(InternetAddress.loopbackIPv4,8080).then((HttpServer server){
-        new RouteProvider(server, {
-            "defaultRoute":"/",
-            "staticContentRoot":"/docroot"
-        })
+        new RouteProvider(server)
         ..route(
             url: "/",
-            controller: new EmptyRouteController(),
             responser: new FileResponse("docroot/index.html"),
-            auth: new StaticAuth(authed: true)
+            auth: freeForAll
+        )
+        ..route(
+            url: '/assets/**',
+            responser: new FolderResponse("docroot/assets/"),
+            auth: freeForAll
         )
         ..route(
             url: "/impress",
-            controller: new RestApiController(),
             responser: new FileResponse("docroot/impress.html"),
-            auth: new StaticAuth(authed: true)
+            auth: freeForAll
+        )
+        ..route(
+            url: "/api/data/:id",
+            controller: new DataRestApiController(),
+            responser: jsonResponser,
+            auth: userAuth
         )
         ..start();
     }).catchError((e) => print(e.toString()));
@@ -48,7 +55,7 @@ main() {
 2. Create your feature branch: `git checkout -b my-new-feature`
 3. Commit your changes: `git commit -am 'Add some feature'`
 4. Push to the branch: `git push origin my-new-feature`
-5. Submit a pull request :D
+5. Submit a pull request
 
 ## Credits
 
