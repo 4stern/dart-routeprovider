@@ -1,3 +1,7 @@
+## 3.1.3 (2019-01-13)
+- add example
+- change description in pubspec
+
 ## 3.1.2 (2019-01-13)
 - reformat the code
 
