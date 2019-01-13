@@ -13,7 +13,6 @@ class RouteControllerError extends RouteController {
 }
 
 class APIController extends RestApiController {
-
   @override
   Future<Map> onGet(HttpRequest request, Map params,
       {AuthResponse authResponse}) async {

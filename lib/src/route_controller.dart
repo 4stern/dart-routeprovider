@@ -66,7 +66,7 @@ abstract class RouteController {
     //testing stream format
     dynamic t = this._testJson(body);
     if (t is Map) {
-        data = t;
+      data = t;
     }
     if (data == null) {
       data = this._testQuery(body);

@@ -25,9 +25,9 @@ class RouteBundle {
 }
 
 class ParameterizedResult {
-    RouteBundle bundle;
-    Map params;
-    ParameterizedResult({this.bundle, this.params});
+  RouteBundle bundle;
+  Map params;
+  ParameterizedResult({this.bundle, this.params});
 }
 
 class RouteProvider {
@@ -194,7 +194,8 @@ class RouteProvider {
         if (requestedUrl[i] == patternUrl[i] || doublePoint == true) {
           countIdent++;
           if (doublePoint == true) {
-            matchedResult[patternUrl[i].substring(1).toString()] = requestedUrl[i].toString();
+            matchedResult[patternUrl[i].substring(1).toString()] =
+                requestedUrl[i].toString();
           }
         }
       }
