@@ -1,3 +1,6 @@
+## 3.1.4 (2019-01-13)
+- bugfix
+
 ## 3.1.3 (2019-01-13)
 - add example
 - change description in pubspec

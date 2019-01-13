@@ -3,7 +3,7 @@ description: >
   Provides backend routing for http-server from dart:io.
   Split routes into separates parts: authentification, controller for data processing and response for outputting the results.
   It comes around with a some default responsers for files, folders, json or redirects.
-version: 3.1.3
+version: 3.1.4
 author: Robert Beyer <4sternrb@googlemail.com>
 homepage: http://github.com/4stern/dart-routeprovider
 dependencies:

@@ -5,7 +5,7 @@
 Add it to your dependencies
 ```
 dependencies:
-  route_provider: ^3.1.1
+  route_provider: ^3.1.4
 ```
 
 and install the package
