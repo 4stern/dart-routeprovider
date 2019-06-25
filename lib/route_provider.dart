@@ -182,8 +182,8 @@ class RouteProvider {
   }
 
   Map _compareUrlPattern(String url, String urlPattern) {
-    List requestedUrl = url.split("/");
-    List patternUrl = urlPattern.split("/");
+    List<String> requestedUrl = url.split("/");
+    List<String> patternUrl = urlPattern.split("/");
     int countIdent = 0;
     bool matched = false;
     Map<String, String> matchedResult = new Map<String, String>();

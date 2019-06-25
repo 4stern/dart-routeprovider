@@ -7,15 +7,18 @@ import 'package:route_provider/route_provider.dart';
 class RouteControllerError extends RouteController {
   RouteControllerError();
 
+  @override
   Future<Map> execute(HttpRequest request, Map params,
-      {AuthResponse authResponse: null}) async {
+      {AuthResponse authResponse}) async {
     throw new RouteError(HttpStatus.notFound, "ERROR");
   }
 }
 
 class APIController extends RestApiController {
+
+  @override
   Future<Map> onGet(HttpRequest request, Map params,
-      {AuthResponse authResponse: null}) async {
+      {AuthResponse authResponse}) async {
     throw new RouteError(HttpStatus.internalServerError, 'Not supported');
   }
 }
@@ -23,6 +26,8 @@ class APIController extends RestApiController {
 class MyAuth implements Auth {
   bool authed = false;
   MyAuth({this.authed: false});
+
+  @override
   Future<AuthResponse> isAuthed(HttpRequest request, Map params) async =>
       this.authed ? new AuthResponse() : null;
 }
