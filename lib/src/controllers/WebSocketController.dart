@@ -2,8 +2,7 @@ part of route_provider;
 
 abstract class WebSocketController extends RouteController {
   @override
-  Future<Map> execute(HttpRequest request, Map params,
-      {AuthResponse authResponse}) async {
+  Future<Map> execute(HttpRequest request, Map params, {AuthResponse authResponse}) async {
     try {
       WebSocket websocket = await WebSocketTransformer.upgrade(request);
       websocket.listen((message) {
@@ -17,9 +16,7 @@ abstract class WebSocketController extends RouteController {
     } catch (error, stacktrace) {
       print(error.toString());
       print(stacktrace.toString());
-      throw new RouteError(
-        HttpStatus.internalServerError, 'Internal Server Error'
-      );
+      throw new RouteError(HttpStatus.internalServerError, 'Internal Server Error');
     }
   }
 

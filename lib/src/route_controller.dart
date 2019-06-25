@@ -54,8 +54,7 @@ abstract class RouteController {
     }, onDone: () {
       _completer.complete(bodyData);
     }, onError: (error) {
-      throw new RouteError(
-          HttpStatus.internalServerError, 'Internal Server Error');
+      throw new RouteError(HttpStatus.internalServerError, 'Internal Server Error');
     });
     return _completer.future;
   }
@@ -74,8 +73,7 @@ abstract class RouteController {
     return data;
   }
 
-  Future<Map> execute(HttpRequest request, Map params,
-      {AuthResponse authResponse}) async {
+  Future<Map> execute(HttpRequest request, Map params, {AuthResponse authResponse}) async {
     Map map = new Map();
     return map;
   }

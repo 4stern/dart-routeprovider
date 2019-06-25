@@ -37,13 +37,9 @@ class RouteProvider {
   Map<String, RouteBundle> _calls = new Map<String, RouteBundle>();
   Map<String, RouteBundle> _folders = new Map<String, RouteBundle>();
 
-  RouteProvider(this.server, {this.basePath =''});
+  RouteProvider(this.server, {this.basePath = ''});
 
-  void route(
-      {String url,
-      RouteController controller,
-      ResponseHandler responser,
-      Auth auth}) {
+  void route({String url, RouteController controller, ResponseHandler responser, Auth auth}) {
     ArgumentError.checkNotNull(url);
 
     if (controller == null) {
@@ -59,8 +55,7 @@ class RouteProvider {
       responser.urlPattern = normalizedRealPath;
       responser.recursive = realPath.contains('/**');
 
-      _folders[normalizedRealPath] =
-          new RouteBundle(controller, responser, auth);
+      _folders[normalizedRealPath] = new RouteBundle(controller, responser, auth);
     } else {
       _calls[realPath] = new RouteBundle(controller, responser, auth);
     }
@@ -107,13 +102,11 @@ class RouteProvider {
     }
   }
 
-  RouteBundle checkForDirectUrls(path) =>
-      _calls.containsKey(path) ? _calls[path] : null;
+  RouteBundle checkForDirectUrls(path) => _calls.containsKey(path) ? _calls[path] : null;
 
   RouteBundle checkForFolders(path) {
     List<String> possibleFolders = _folders.keys
-        .where((folderPaths) =>
-            path.startsWith(folderPaths) == true && path.endsWith('/') == false)
+        .where((folderPaths) => path.startsWith(folderPaths) == true && path.endsWith('/') == false)
         .toList();
     if (possibleFolders.isEmpty) {
       return null;
@@ -121,9 +114,7 @@ class RouteProvider {
       return _folders[possibleFolders.first];
     } else {
       String moreSpecializedElement = possibleFolders.reduce((value, element) {
-        return value.split('/').length > element.split('/').length
-            ? value
-            : element;
+        return value.split('/').length > element.split('/').length ? value : element;
       });
       return _folders[moreSpecializedElement];
     }
@@ -157,29 +148,23 @@ class RouteProvider {
       ..close();
   }
 
-  void _executeResponse(
-      HttpRequest request, Map params, RouteBundle bundle) async {
+  void _executeResponse(HttpRequest request, Map params, RouteBundle bundle) async {
     try {
       AuthResponse authResponse = await bundle.auth.isAuthed(request, params);
       if (authResponse != null) {
-        var templateVars = await bundle.controller
-            .execute(request, params, authResponse: authResponse);
+        var templateVars = await bundle.controller.execute(request, params, authResponse: authResponse);
         await bundle.responser.response(request, templateVars);
       } else {
         throw new RouteError(HttpStatus.unauthorized, "Auth failed");
       }
     } on RouteError catch (routeError) {
       request.response.statusCode = routeError.getStatus();
-      request.response
-        ..write(routeError.getMessage())
-        ..close();
-      await new Future.value();
+      request.response.write(routeError.getMessage());
+      await request.response.close();
     } catch (error) {
       request.response.statusCode = HttpStatus.internalServerError;
-      request.response
-        ..write(error)
-        ..close();
-      await new Future.value();
+      request.response.write(error);
+      await request.response.close();
     }
   }
 
@@ -196,8 +181,7 @@ class RouteProvider {
         if (requestedUrl[i] == patternUrl[i] || doublePoint == true) {
           countIdent++;
           if (doublePoint == true) {
-            matchedResult[patternUrl[i].substring(1).toString()] =
-                requestedUrl[i].toString();
+            matchedResult[patternUrl[i].substring(1).toString()] = requestedUrl[i].toString();
           }
         }
       }

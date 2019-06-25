@@ -1,7 +1,7 @@
 name: route_provider
 description: >
   Provides backend routing for http-servers. Split routes into separates parts: authentification, controller for data processing and response for outputting the results.
-version: 3.1.6+3
+version: 3.1.6+4
 author: Robert Beyer <4sternrb@googlemail.com>
 homepage: http://github.com/4stern/dart-routeprovider
 dependencies:
@@ -9,5 +9,6 @@ dependencies:
 dev_dependencies:
   build_web_compilers: '>=0.3.6 <2.0.0'
   build_runner: '>=0.8.10 <2.0.0'
+  pedantic: '1.7.0'
 environment:
   sdk: ">=2.1.0 <3.0.0"

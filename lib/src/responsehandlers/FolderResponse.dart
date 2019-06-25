@@ -34,9 +34,7 @@ class FolderResponse extends ResponseHandler {
     }
 
     filePath = filePath.replaceAll('/', Platform.pathSeparator);
-    filePath = filePath.replaceAll(
-        Platform.pathSeparator + Platform.pathSeparator,
-        Platform.pathSeparator);
+    filePath = filePath.replaceAll(Platform.pathSeparator + Platform.pathSeparator, Platform.pathSeparator);
 
     FileResponse fr = new FileResponse(filePath);
     await fr.response(request, vars);

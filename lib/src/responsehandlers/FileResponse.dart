@@ -18,13 +18,9 @@ class FileResponse extends ResponseHandler {
       request.response.headers.add(HttpHeaders.contentTypeHeader, mimeType);
 
       StreamConsumer<List<int>> streamConsumer = request.response;
-      file.openRead()
-          .cast<List<int>>()
-          .pipe(streamConsumer)
-          .then((streamConsumer) {
-        streamConsumer.close();
+      await file.openRead().cast<List<int>>().pipe(streamConsumer).then((streamConsumer) {
+        return streamConsumer.close();
       });
-      return new Future.value();
     } else {
       throw new RouteError(HttpStatus.notFound, "Not found");
     }

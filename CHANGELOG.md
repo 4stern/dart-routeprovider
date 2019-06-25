@@ -1,3 +1,6 @@
+## 3.1.6+4 (2019-06-26)
+- add pedantic dev_dependency, dartfmt, dartanalyzer
+
 ## 3.1.6+3 (2019-06-25)
 - more clean up to increase pub scoring
 
