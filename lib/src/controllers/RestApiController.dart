@@ -4,52 +4,53 @@ abstract class RestApiController extends RouteController {
   RestApiController();
 
   Future<Map> onOptions(HttpRequest request, Map params,
-      {AuthResponse authResponse: null}) async {
+      {AuthResponse authResponse}) async {
     throw new RouteError(HttpStatus.internalServerError, 'Not supported');
   }
 
   Future<Map> onGet(HttpRequest request, Map params,
-      {AuthResponse authResponse: null}) async {
+      {AuthResponse authResponse}) async {
     throw new RouteError(HttpStatus.internalServerError, 'Not supported');
   }
 
   Future<Map> onHead(HttpRequest request, Map params,
-      {AuthResponse authResponse: null}) async {
+      {AuthResponse authResponse}) async {
     throw new RouteError(HttpStatus.internalServerError, 'Not supported');
   }
 
   Future<Map> onPost(HttpRequest request, Map params,
-      {AuthResponse authResponse: null}) async {
+      {AuthResponse authResponse}) async {
     throw new RouteError(HttpStatus.internalServerError, 'Not supported');
   }
 
   Future<Map> onPut(HttpRequest request, Map params,
-      {AuthResponse authResponse: null}) async {
+      {AuthResponse authResponse}) async {
     throw new RouteError(HttpStatus.internalServerError, 'Not supported');
   }
 
   Future<Map> onDelete(HttpRequest request, Map params,
-      {AuthResponse authResponse: null}) async {
+      {AuthResponse authResponse}) async {
     throw new RouteError(HttpStatus.internalServerError, 'Not supported');
   }
 
   Future<Map> onTrace(HttpRequest request, Map params,
-      {AuthResponse authResponse: null}) async {
+      {AuthResponse authResponse}) async {
     throw new RouteError(HttpStatus.internalServerError, 'Not supported');
   }
 
   Future<Map> onConnect(HttpRequest request, Map params,
-      {AuthResponse authResponse: null}) async {
+      {AuthResponse authResponse}) async {
     throw new RouteError(HttpStatus.internalServerError, 'Not supported');
   }
 
   Future<Map> onDefault(HttpRequest request, Map params,
-      {AuthResponse authResponse: null}) async {
+      {AuthResponse authResponse}) async {
     throw new RouteError(HttpStatus.internalServerError, 'Not supported');
   }
 
+  @override
   Future<Map> execute(HttpRequest request, Map params,
-      {AuthResponse authResponse: null}) async {
+      {AuthResponse authResponse}) async {
     try {
       String method = request.method.toUpperCase();
       switch (method) {

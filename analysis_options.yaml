@@ -13,6 +13,6 @@ linter:
     - annotate_overrides
     - avoid_init_to_null
     # - constant_identifier_names
-    - one_member_abstracts
+    # - one_member_abstracts
     - slash_for_doc_comments
     # - sort_constructors_first

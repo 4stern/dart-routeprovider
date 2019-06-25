@@ -1,8 +1,9 @@
 part of route_provider;
 
 abstract class WebSocketController extends RouteController {
+  @override
   Future<Map> execute(HttpRequest request, Map params,
-      {AuthResponse authResponse: null}) async {
+      {AuthResponse authResponse}) async {
     try {
       WebSocketTransformer.upgrade(request).then((WebSocket websocket) {
         websocket.listen((message) {
