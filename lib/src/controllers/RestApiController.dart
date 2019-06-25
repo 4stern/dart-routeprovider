@@ -89,12 +89,13 @@ abstract class RestApiController extends RouteController {
     } on RouteError catch (error, stacktrace) {
       print(error.getMessage().toString());
       print(stacktrace.toString());
-      throw error;
+      rethrow;
     } catch (error, stacktrace) {
       print(error.toString());
       print(stacktrace.toString());
       throw new RouteError(
-          HttpStatus.internalServerError, 'Internal Server Error');
+        HttpStatus.internalServerError, 'Internal Server Error'
+      );
     }
   }
 }

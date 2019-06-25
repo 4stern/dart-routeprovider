@@ -4,10 +4,10 @@ class JsonResponse extends ResponseHandler {
   JsonResponse() : super();
 
   @override
-  Future response(HttpRequest request, Map vars) {
+  Future response(HttpRequest request, Map responseData) {
     try {
-      if (vars != null) {
-        String outputString = json.encode(vars);
+      if (responseData != null) {
+        String outputString = json.encode(responseData);
         print('JsonResponse -> ' +
             request.uri.toString() +
             '\n\t' +
@@ -18,12 +18,13 @@ class JsonResponse extends ResponseHandler {
         request.response.close();
       } else {
         throw new RouteError(
-            HttpStatus.internalServerError, 'Converting data to json failed');
+          HttpStatus.internalServerError, 'Converting data to json failed'
+        );
       }
     } on RouteError catch (routeError, stacktrace) {
       print(routeError.getMessage());
       print(stacktrace.toString());
-      throw routeError;
+      rethrow;
     } catch (error, stacktrace) {
       print(error.toString());
       print(stacktrace.toString());

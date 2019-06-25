@@ -37,7 +37,7 @@ class RouteProvider {
   Map<String, RouteBundle> _calls = new Map<String, RouteBundle>();
   Map<String, RouteBundle> _folders = new Map<String, RouteBundle>();
 
-  RouteProvider(this.server, {this.basePath: ''});
+  RouteProvider(this.server, {this.basePath =''});
 
   void route(
       {String url,
@@ -115,7 +115,7 @@ class RouteProvider {
         .where((folderPaths) =>
             path.startsWith(folderPaths) == true && path.endsWith('/') == false)
         .toList();
-    if (possibleFolders.length == 0) {
+    if (possibleFolders.isEmpty) {
       return null;
     } else if (possibleFolders.length == 1) {
       return _folders[possibleFolders.first];
@@ -173,11 +173,13 @@ class RouteProvider {
       request.response
         ..write(routeError.getMessage())
         ..close();
+      await new Future.value();
     } catch (error) {
       request.response.statusCode = HttpStatus.internalServerError;
       request.response
         ..write(error)
         ..close();
+      await new Future.value();
     }
   }
 

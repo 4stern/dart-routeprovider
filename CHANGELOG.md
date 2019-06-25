@@ -1,4 +1,10 @@
-## 3.1.6+1 (2019-01-13)
+## 3.1.6+3 (2019-06-25)
+- more clean up to increase pub scoring
+
+## 3.1.6+2 (2019-06-25)
+- clean up with dartanalyzer
+
+## 3.1.6+1 (2019-06-25)
 - Prepare for upcoming change to File.openRead()
 
 ## 3.1.6 (2019-01-13)
