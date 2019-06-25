@@ -1,3 +1,6 @@
+## 3.1.6+5 (2019-06-26)
+- add .editorconfig and change homepage url to https
+
 ## 3.1.6+4 (2019-06-26)
 - add pedantic dev_dependency, dartfmt, dartanalyzer
 
