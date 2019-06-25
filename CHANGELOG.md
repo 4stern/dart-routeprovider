@@ -1,3 +1,6 @@
+## 3.1.6+1 (2019-01-13)
+- Prepare for upcoming change to File.openRead()
+
 ## 3.1.6 (2019-01-13)
 - add analysis_options
 
