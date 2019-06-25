@@ -25,7 +25,7 @@ class APIController extends RestApiController {
 
 class MyAuth implements Auth {
   bool authed = false;
-  MyAuth({this.authed: false});
+  MyAuth({this.authed = false});
 
   @override
   Future<AuthResponse> isAuthed(HttpRequest request, Map params) async =>
