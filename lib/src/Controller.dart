@@ -49,7 +49,7 @@ abstract class Controller {
   Future<String> _getData(HttpRequest request) async {
     Completer<String> _completer = new Completer();
     String bodyData = "";
-    request.transform(utf8.decoder).listen((stream) {
+    utf8.decoder.bind(request).listen((stream) {
       bodyData += stream;
     }, onDone: () {
       _completer.complete(bodyData);
