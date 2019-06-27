@@ -39,6 +39,11 @@ class RouteProvider {
     server.close();
   }
 
+  void clear() {
+      _calls.clear();
+      _folders.clear();
+  }
+
   Future handleRequest(HttpRequest request) async {
     String path = request.uri.path;
     RouteBundle bundle;
