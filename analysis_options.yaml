@@ -4,6 +4,7 @@ include: package:pedantic/analysis_options.yaml
 analyzer:
   strong-mode:
     implicit-casts: false
+    implicit-dynamic: false
 
 # Source of linter options:
 # http://dart-lang.github.io/linter/lints/options/options.html
@@ -14,7 +15,7 @@ linter:
     - empty_constructor_bodies
     - annotate_overrides
     - avoid_init_to_null
-    # - constant_identifier_names
+    - constant_identifier_names
     # - one_member_abstracts
     - slash_for_doc_comments
     # - sort_constructors_first

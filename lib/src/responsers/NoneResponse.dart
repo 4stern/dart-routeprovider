@@ -1,10 +1,10 @@
 part of route_provider;
 
-class NoneResponse extends ResponseHandler {
+class NoneResponse extends Response {
   NoneResponse() : super();
 
   @override
-  Future response(HttpRequest request, Map vars) {
-    return null;
+  Future response(HttpRequest request, Map vars) async {
+    return request.response.close();
   }
 }

@@ -1,15 +1,21 @@
 part of route_provider;
 
-class JsonResponse extends ResponseHandler {
+class JsonResponse extends Response {
   JsonResponse() : super();
+
+  @override
+  String getContentType() {
+    return new ContentType("application", "json", charset: "utf-8").toString();
+  }
 
   @override
   Future response(HttpRequest request, Map responseData) {
     try {
+      request.response.headers.add(HttpHeaders.contentTypeHeader, getContentType());
       if (responseData != null) {
         String outputString = json.encode(responseData);
         print('JsonResponse -> ' + request.uri.toString() + '\n\t' + outputString);
-        request.response.headers.contentType = new ContentType("application", "json", charset: "utf-8");
+
         request.response.write(outputString);
         request.response.close();
       } else {

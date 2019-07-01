@@ -1,6 +1,6 @@
 part of route_provider;
 
-class RedirectResponse extends ResponseHandler {
+class RedirectResponse extends Response {
   String routeUrl;
   int httpStatus;
 

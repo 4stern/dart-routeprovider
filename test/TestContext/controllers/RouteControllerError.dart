@@ -1,7 +1,7 @@
 import 'package:route_provider/route_provider.dart';
 import 'dart:io';
 
-class RouteControllerError extends RouteController {
+class RouteControllerError extends Controller {
     int httpStatus;
     RouteControllerError(this.httpStatus);
 

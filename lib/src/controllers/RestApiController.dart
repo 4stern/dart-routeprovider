@@ -1,7 +1,15 @@
 part of route_provider;
 
-abstract class RestApiController extends RouteController {
-  RestApiController();
+abstract class RestApiController extends Controller {
+  bool cors;
+
+  RestApiController({this.cors = true});
+
+  void setCorsHeaders(HttpRequest request) {
+    request.response.headers.set("Access-Control-Allow-Origin", '*');
+    request.response.headers.set("Access-Control-Allow-Methods", 'GET,PUT,POST,DELETE,OPTIONS,CONNECT');
+    request.response.headers.set("Access-Control-Allow-Headers", 'Content-Type,Accept,X-Access-Token,X-Key');
+  }
 
   Future<Map> onOptions(HttpRequest request, Map params, {AuthResponse authResponse}) async {
     throw new RouteError(HttpStatus.internalServerError, 'Not supported');
@@ -42,6 +50,9 @@ abstract class RestApiController extends RouteController {
   @override
   Future<Map> execute(HttpRequest request, Map params, {AuthResponse authResponse}) async {
     try {
+      if (cors) {
+        setCorsHeaders(request);
+      }
       String method = request.method.toUpperCase();
       switch (method) {
         case "OPTIONS":

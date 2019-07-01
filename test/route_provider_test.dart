@@ -4,7 +4,7 @@ import 'dart:async';
 import 'dart:io';
 import 'package:route_provider/route_provider.dart';
 
-class RouteControllerError extends RouteController {
+class RouteControllerError extends Controller {
   RouteControllerError();
 
   @override
@@ -14,23 +14,7 @@ class RouteControllerError extends RouteController {
   }
 }
 
-class APIController extends RestApiController {
-
-  @override
-  Future<Map> onGet(HttpRequest request, Map params,
-      {AuthResponse authResponse}) async {
-    throw new RouteError(HttpStatus.internalServerError, 'Not supported');
-  }
-}
-
-class MyAuth implements Auth {
-  bool authed = false;
-  MyAuth({this.authed = false});
-
-  @override
-  Future<AuthResponse> isAuthed(HttpRequest request, Map params) async =>
-      this.authed ? new AuthResponse() : null;
-}
+class APIController extends RestApiController {}
 
 Future main() async {
   HttpServer server = await HttpServer.bind(InternetAddress.loopbackIPv4, 4040);
@@ -38,42 +22,42 @@ Future main() async {
   print('listening on localhost, port ${server.port}');
 
   //start webserver
-  new RouteProvider(server)
+  new Router(server)
     ..route(
         url: '/',
         responser: new FileResponse("docroot/home.html"),
-        auth: new MyAuth(authed: true))
+        auth: new StaticAuth(authed: true))
     ..route(
         url: '/',
         responser: new FolderResponse("docroot/"),
-        auth: new MyAuth(authed: true))
+        auth: new StaticAuth(authed: true))
     ..route(
         url: '/img',
         responser: new FolderResponse("docroot/assets/img"),
-        auth: new MyAuth(authed: true))
+        auth: new StaticAuth(authed: true))
     ..route(
         url: '/assets/**',
         responser: new FolderResponse("docroot/assets/"),
-        auth: new MyAuth(authed: true))
+        auth: new StaticAuth(authed: true))
     ..route(
         url: '/js/**',
         responser: new FolderResponse("docroot/code/"),
-        auth: new MyAuth(authed: true))
+        auth: new StaticAuth(authed: true))
     ..route(
         url: '/error',
         controller: new RouteControllerError(),
         responser: new FileResponse("docroot/home.html"),
-        auth: new MyAuth(authed: true))
+        auth: new StaticAuth(authed: true))
     ..route(
         url: '/error2',
         controller: new APIController(),
         responser: new FileResponse("docroot/home.html"),
-        auth: new MyAuth(authed: true))
+        auth: new StaticAuth(authed: true))
     ..route(
         url: '/noauth',
         controller: new APIController(),
         responser: new FileResponse("docroot/home.html"),
-        auth: new MyAuth(authed: false))
+        auth: new StaticAuth(authed: false))
     ..start();
 
   //perform more tests here

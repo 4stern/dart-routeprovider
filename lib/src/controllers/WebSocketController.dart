@@ -1,14 +1,14 @@
 part of route_provider;
 
-abstract class WebSocketController extends RouteController {
+abstract class WebSocketController extends Controller {
   @override
   Future<Map> execute(HttpRequest request, Map params, {AuthResponse authResponse}) async {
     try {
       WebSocket websocket = await WebSocketTransformer.upgrade(request);
-      websocket.listen((message) {
+      websocket.listen((dynamic message) {
         listener(websocket, message);
       });
-      return new Map();
+      return new Map<dynamic, dynamic>();
     } on RouteError catch (error, stacktrace) {
       print(error.getMessage().toString());
       print(stacktrace.toString());
@@ -21,5 +21,5 @@ abstract class WebSocketController extends RouteController {
   }
 
   /// must be overwritten
-  void listener(WebSocket websocket, message) {}
+  void listener(WebSocket websocket, dynamic message) {}
 }

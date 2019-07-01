@@ -1,6 +1,6 @@
 part of route_provider;
 
-class FolderResponse extends ResponseHandler {
+class FolderResponse extends Response {
   String folderpath;
 
   /// set by routeprovider while init

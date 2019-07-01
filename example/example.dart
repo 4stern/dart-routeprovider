@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:io';
 import 'package:route_provider/route_provider.dart';
 
-class RouteControllerError extends RouteController {
+class RouteControllerError extends Controller {
   RouteControllerError();
 
   @override
@@ -23,13 +23,13 @@ class MyAuth implements Auth {
   MyAuth({this.authed = false});
 
   @override
-  Future<AuthResponse> isAuthed(HttpRequest request, Map params) async => this.authed ? new AuthResponse() : null;
+  Future<AuthResponse> isAuthed(HttpRequest request, Map params) async => this.authed ? new StaticAuthResponse() : null;
 }
 
 Future main() async {
   HttpServer server = await HttpServer.bind(InternetAddress.loopbackIPv4, 4040);
 
-  new RouteProvider(server)
+  new Router(server)
     ..route(url: '/', responser: new FileResponse("docroot/home.html"), auth: new MyAuth(authed: true))
     ..route(url: '/', responser: new FolderResponse("docroot/"), auth: new MyAuth(authed: true))
     ..route(url: '/img', responser: new FolderResponse("docroot/assets/img"), auth: new MyAuth(authed: true))

@@ -1,3 +1,8 @@
+## 4.0.0 (2019-07-01)
+- add tests
+- rename classes
+- RestApiController set CORS-header as default
+
 ## 3.1.6+5 (2019-06-26)
 - add .editorconfig and change homepage url to https
 

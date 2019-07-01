@@ -1,8 +1,8 @@
 part of route_provider;
 
 class RouteBundle {
-  RouteController controller;
-  ResponseHandler responser;
+  Controller controller;
+  Response responser;
   Auth auth;
   RouteBundle(this.controller, this.responser, this.auth);
 }

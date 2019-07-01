@@ -1,6 +1,6 @@
 part of route_provider;
 
-class FileResponse extends ResponseHandler {
+class FileResponse extends Response {
   String filename;
 
   FileResponse(this.filename) : super();
@@ -13,7 +13,7 @@ class FileResponse extends ResponseHandler {
     if (fileExists == true) {
       String mimeType = mime(fileName);
       if (mimeType == null) {
-        mimeType = 'text/plain; charset=UTF-8';
+        mimeType = getContentType();
       }
       request.response.headers.add(HttpHeaders.contentTypeHeader, mimeType);
 

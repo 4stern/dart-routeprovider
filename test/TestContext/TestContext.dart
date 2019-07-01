@@ -9,21 +9,33 @@ class Auths {
 }
 
 class Controllers {
-    RouteController notFoundError = new RouteControllerError(HttpStatus.notFound);
-    RouteController internalServerError = new RouteControllerError(HttpStatus.internalServerError);
+    Controller notFoundError = new RouteControllerError(HttpStatus.notFound);
+    Controller internalServerError = new RouteControllerError(HttpStatus.internalServerError);
 }
 
 class Responsers {
-    ResponseHandler json = new JsonResponse();
-    ResponseHandler none = new NoneResponse();
+    Response json = new JsonResponse();
+    Response none = new NoneResponse();
+}
+
+class Client {
+    HttpClient client = new HttpClient();
+    String host;
+    int port;
+
+    Client({this.host, this.port});
+
+    Future<HttpClientResponse> get(String path) async {
+        return await (await client.get(host, port, path)).close();
+    }
 }
 
 class TestContext {
     Auths auth = new Auths();
     Controllers controller = new Controllers();
     Responsers responser = new Responsers();
-    RouteProvider routeProvider;
-    HttpClient client = new HttpClient();
+    Router router;
+    Client client;
 
     final int port;
     TestContext({this.port = 4040});
@@ -34,23 +46,17 @@ class TestContext {
         return await HttpServer.bind(_adress, _port);
     }
 
-    RouteProvider createRouter(HttpServer server) {
-        routeProvider = new RouteProvider(server);
-        return routeProvider;
+    Router createRouter(HttpServer server) {
+        router = new Router(server);
+        return router;
     }
 
-    Future<RouteProvider> init() async {
-        return createRouter(await createServer());
+    Future<Router> init() async {
+        createRouter(await createServer());
+        client = new Client(
+            host: router.server.address.host,
+            port: router.server.port
+        );
+        return router;
     }
-
-    Future<HttpClientResponse> get(String path) async {
-        if (routeProvider != null) {
-            HttpClientRequest request = await client.get(routeProvider.server.address.host, routeProvider.server.port, path);
-            return await request.close();
-        } else {
-            throw new StateError('Router not created');
-        }
-    }
-
-
 }

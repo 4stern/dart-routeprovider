@@ -5,7 +5,7 @@
 Add it to your dependencies
 ```
 dependencies:
-  route_provider: ^3.1.6+5
+  route_provider: ^4.0.0
 ```
 
 and install the package
@@ -22,7 +22,7 @@ main() {
     Auth userAuth = new MyAuth();
     Responser jsonResponser = new JsonResponse();
     HttpServer.bind(InternetAddress.loopbackIPv4,8080).then((HttpServer server){
-        new RouteProvider(server)
+        new Router(server)
         ..route(
             url: "/",
             responser: new FileResponse("docroot/index.html"),
