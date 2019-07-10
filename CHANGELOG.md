@@ -1,3 +1,6 @@
+## 4.0.2
+- Bugifx: Multiple starts doesn't end in error
+
 ## 4.0.1
 - Prepare for upcoming change to `HttpRequest` and `HttpClientResponse`
 
