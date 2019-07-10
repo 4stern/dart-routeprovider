@@ -1,3 +1,6 @@
+## 4.0.1
+- Prepare for upcoming change to `HttpRequest` and `HttpClientResponse`
+
 ## 4.0.0 (2019-07-01)
 - add tests
 - rename classes
