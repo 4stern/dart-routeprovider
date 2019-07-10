@@ -5,7 +5,7 @@
 Add it to your dependencies
 ```
 dependencies:
-  route_provider: ^4.0.0
+  route_provider: ^4.0.2
 ```
 
 and install the package
@@ -21,7 +21,7 @@ main() {
     Auth freeForAll = new StaticAuth(authed: true);
     Auth userAuth = new MyAuth();
     Responser jsonResponser = new JsonResponse();
-    HttpServer.bind(InternetAddress.loopbackIPv4,8080).then((HttpServer server){
+    HttpServer.bind(InternetAddress.anyIPv4,8080).then((HttpServer server){
         new Router(server)
         ..route(
             url: "/",
