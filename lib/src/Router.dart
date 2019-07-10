@@ -3,7 +3,7 @@ part of route_provider;
 class Router {
   HttpServer server;
   String basePath;
-
+  StreamSubscription subscription;
   Map<String, RouteBundle> _calls = new Map<String, RouteBundle>();
   Map<String, RouteBundle> _folders = new Map<String, RouteBundle>();
 
@@ -32,11 +32,15 @@ class Router {
   }
 
   void start() {
-    server.listen(this.handleRequest);
+    if (subscription == null) {
+      subscription = server.listen(this.handleRequest);
+    }
   }
 
   void stop() {
     server.close();
+    subscription.cancel();
+    subscription = null;
   }
 
   void clear() {
