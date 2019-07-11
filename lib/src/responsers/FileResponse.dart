@@ -18,7 +18,7 @@ class FileResponse extends Response {
       request.response.headers.add(HttpHeaders.contentTypeHeader, mimeType);
 
       StreamConsumer<List<int>> streamConsumer = request.response;
-      await file.openRead().cast<List<int>>().pipe(streamConsumer).then((streamConsumer) {
+      await file.openRead().cast<List<int>>().pipe(streamConsumer).then<void>((dynamic streamConsumer) {
         return streamConsumer.close();
       });
     } else {

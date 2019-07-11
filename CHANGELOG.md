@@ -1,3 +1,6 @@
+## 4.0.2+1
+- Stronger Type
+
 ## 4.0.2
 - Bugifx: Multiple starts doesn't end in error
 
