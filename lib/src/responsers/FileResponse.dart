@@ -8,7 +8,7 @@ class FileResponse extends Response {
   @override
   Future response(HttpRequest request, Map vars) async {
     String fileName = this.filename;
-    var file = new File(fileName);
+    var file = File(fileName);
     bool fileExists = await file.exists();
     if (fileExists == true) {
       String mimeType = mime(fileName);
@@ -22,7 +22,7 @@ class FileResponse extends Response {
         return streamConsumer.close();
       });
     } else {
-      throw new RouteError(HttpStatus.notFound, "Not found");
+      throw RouteError(HttpStatus.notFound, "Not found");
     }
   }
 }

@@ -20,3 +20,4 @@ part 'src/controllers/RestApiController.dart';
 part 'src/controllers/WebSocketController.dart';
 part 'src/auth/Auth.dart';
 part 'src/auth/StaticAuth.dart';
+part 'src/responsers/StatusOnlyResponse.dart';

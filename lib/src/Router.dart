@@ -4,8 +4,8 @@ class Router {
   HttpServer server;
   String basePath;
   StreamSubscription subscription;
-  Map<String, RouteBundle> _calls = new Map<String, RouteBundle>();
-  Map<String, RouteBundle> _folders = new Map<String, RouteBundle>();
+  Map<String, RouteBundle> _calls = Map<String, RouteBundle>();
+  Map<String, RouteBundle> _folders = Map<String, RouteBundle>();
 
   Router(this.server, {this.basePath = ''});
 
@@ -13,10 +13,10 @@ class Router {
     ArgumentError.checkNotNull(url);
 
     if (controller == null) {
-      controller = new EmptyRouteController();
+      controller = EmptyRouteController();
     }
     if (auth == null) {
-      auth = new StaticAuth(authed: true);
+      auth = StaticAuth(authed: true);
     }
 
     String realPath = this.basePath + url;
@@ -25,9 +25,9 @@ class Router {
       responser.urlPattern = normalizedRealPath;
       responser.recursive = realPath.contains('/**');
 
-      _folders[normalizedRealPath] = new RouteBundle(controller, responser, auth);
+      _folders[normalizedRealPath] = RouteBundle(controller, responser, auth);
     } else {
-      _calls[realPath] = new RouteBundle(controller, responser, auth);
+      _calls[realPath] = RouteBundle(controller, responser, auth);
     }
   }
 
@@ -113,7 +113,7 @@ class Router {
     }
 
     if (url != null) {
-      return new ParameterizedResult(bundle: _calls[url], params: params);
+      return ParameterizedResult(bundle: _calls[url], params: params);
     } else {
       return null;
     }
@@ -134,7 +134,7 @@ class Router {
         var templateVars = await bundle.controller.execute(request, params, authResponse: authResponse);
         await bundle.responser.response(request, templateVars);
       } else {
-        throw new RouteError(HttpStatus.unauthorized, "Auth failed");
+        throw RouteError(HttpStatus.unauthorized, "Auth failed");
       }
     } on RouteError catch (routeError) {
       request.response.headers.add(HttpHeaders.contentTypeHeader, bundle.responser.getContentType());
@@ -154,7 +154,7 @@ class Router {
     List<String> patternUrl = urlPattern.split("/");
     int countIdent = 0;
     bool matched = false;
-    Map<String, String> matchedResult = new Map<String, String>();
+    Map<String, String> matchedResult = Map<String, String>();
 
     if (requestedUrl.length == patternUrl.length) {
       for (int i = 0; i < requestedUrl.length; i++) {

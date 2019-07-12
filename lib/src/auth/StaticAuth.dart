@@ -7,5 +7,5 @@ class StaticAuth implements Auth {
   StaticAuth({this.authed});
 
   @override
-  Future<AuthResponse> isAuthed(HttpRequest request, Map params) async => this.authed ? new StaticAuthResponse() : null;
+  Future<AuthResponse> isAuthed(HttpRequest request, Map params) async => this.authed ? StaticAuthResponse() : null;
 }

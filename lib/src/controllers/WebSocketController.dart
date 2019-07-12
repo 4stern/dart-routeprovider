@@ -8,7 +8,7 @@ abstract class WebSocketController extends Controller {
       websocket.listen((dynamic message) {
         listener(websocket, message);
       });
-      return new Map<dynamic, dynamic>();
+      return Map<dynamic, dynamic>();
     } on RouteError catch (error, stacktrace) {
       print(error.getMessage().toString());
       print(stacktrace.toString());
@@ -16,7 +16,7 @@ abstract class WebSocketController extends Controller {
     } catch (error, stacktrace) {
       print(error.toString());
       print(stacktrace.toString());
-      throw new RouteError(HttpStatus.internalServerError, 'Internal Server Error');
+      throw RouteError(HttpStatus.internalServerError, 'Internal Server Error');
     }
   }
 

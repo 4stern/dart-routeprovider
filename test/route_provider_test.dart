@@ -10,7 +10,7 @@ class RouteControllerError extends Controller {
   @override
   Future<Map> execute(HttpRequest request, Map params,
       {AuthResponse authResponse}) async {
-    throw new RouteError(HttpStatus.notFound, "ERROR");
+    throw RouteError(HttpStatus.notFound, "ERROR");
   }
 }
 
@@ -22,42 +22,42 @@ Future main() async {
   print('listening on localhost, port ${server.port}');
 
   //start webserver
-  new Router(server)
+  Router(server)
     ..route(
         url: '/',
-        responser: new FileResponse("docroot/home.html"),
-        auth: new StaticAuth(authed: true))
+        responser: FileResponse("docroot/home.html"),
+        auth: StaticAuth(authed: true))
     ..route(
         url: '/',
-        responser: new FolderResponse("docroot/"),
-        auth: new StaticAuth(authed: true))
+        responser: FolderResponse("docroot/"),
+        auth: StaticAuth(authed: true))
     ..route(
         url: '/img',
-        responser: new FolderResponse("docroot/assets/img"),
-        auth: new StaticAuth(authed: true))
+        responser: FolderResponse("docroot/assets/img"),
+        auth: StaticAuth(authed: true))
     ..route(
         url: '/assets/**',
-        responser: new FolderResponse("docroot/assets/"),
-        auth: new StaticAuth(authed: true))
+        responser: FolderResponse("docroot/assets/"),
+        auth: StaticAuth(authed: true))
     ..route(
         url: '/js/**',
-        responser: new FolderResponse("docroot/code/"),
-        auth: new StaticAuth(authed: true))
+        responser: FolderResponse("docroot/code/"),
+        auth: StaticAuth(authed: true))
     ..route(
         url: '/error',
-        controller: new RouteControllerError(),
-        responser: new FileResponse("docroot/home.html"),
-        auth: new StaticAuth(authed: true))
+        controller: RouteControllerError(),
+        responser: FileResponse("docroot/home.html"),
+        auth: StaticAuth(authed: true))
     ..route(
         url: '/error2',
-        controller: new APIController(),
-        responser: new FileResponse("docroot/home.html"),
-        auth: new StaticAuth(authed: true))
+        controller: APIController(),
+        responser: FileResponse("docroot/home.html"),
+        auth: StaticAuth(authed: true))
     ..route(
         url: '/noauth',
-        controller: new APIController(),
-        responser: new FileResponse("docroot/home.html"),
-        auth: new StaticAuth(authed: false))
+        controller: APIController(),
+        responser: FileResponse("docroot/home.html"),
+        auth: StaticAuth(authed: false))
     ..start();
 
   //perform more tests here

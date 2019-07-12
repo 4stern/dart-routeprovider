@@ -5,7 +5,7 @@ class JsonResponse extends Response {
 
   @override
   String getContentType() {
-    return new ContentType("application", "json", charset: "utf-8").toString();
+    return ContentType("application", "json", charset: "utf-8").toString();
   }
 
   @override
@@ -19,7 +19,7 @@ class JsonResponse extends Response {
         request.response.write(outputString);
         request.response.close();
       } else {
-        throw new RouteError(HttpStatus.internalServerError, 'Converting data to json failed');
+        throw RouteError(HttpStatus.internalServerError, 'Converting data to json failed');
       }
     } on RouteError catch (routeError, stacktrace) {
       print(routeError.getMessage());
@@ -28,7 +28,7 @@ class JsonResponse extends Response {
     } catch (error, stacktrace) {
       print(error.toString());
       print(stacktrace.toString());
-      throw new RouteError(HttpStatus.internalServerError, 'Internal Server Error');
+      throw RouteError(HttpStatus.internalServerError, 'Internal Server Error');
     }
     return null;
   }

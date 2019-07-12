@@ -4,22 +4,22 @@ import 'dart:io';
 import 'controllers/RouteControllerError.dart';
 
 class Auths {
-    Auth allowed = new StaticAuth(authed: true);
-    Auth denyed = new StaticAuth(authed: false);
+    Auth allowed = StaticAuth(authed: true);
+    Auth denyed = StaticAuth(authed: false);
 }
 
 class Controllers {
-    Controller notFoundError = new RouteControllerError(HttpStatus.notFound);
-    Controller internalServerError = new RouteControllerError(HttpStatus.internalServerError);
+    Controller notFoundError = RouteControllerError(HttpStatus.notFound);
+    Controller internalServerError = RouteControllerError(HttpStatus.internalServerError);
 }
 
 class Responsers {
-    Response json = new JsonResponse();
-    Response none = new NoneResponse();
+    Response json = JsonResponse();
+    Response none = NoneResponse();
 }
 
 class Client {
-    HttpClient client = new HttpClient();
+    HttpClient client = HttpClient();
     String host;
     int port;
 
@@ -31,9 +31,9 @@ class Client {
 }
 
 class TestContext {
-    Auths auth = new Auths();
-    Controllers controller = new Controllers();
-    Responsers responser = new Responsers();
+    Auths auth = Auths();
+    Controllers controller = Controllers();
+    Responsers responser = Responsers();
     Router router;
     Client client;
 
@@ -47,13 +47,13 @@ class TestContext {
     }
 
     Router createRouter(HttpServer server) {
-        router = new Router(server);
+        router = Router(server);
         return router;
     }
 
     Future<Router> init() async {
         createRouter(await createServer());
-        client = new Client(
+        client = Client(
             host: router.server.address.host,
             port: router.server.port
         );

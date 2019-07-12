@@ -30,13 +30,13 @@ class FolderResponse extends Response {
     }
 
     if (filePath == null) {
-      throw new RouteError(HttpStatus.notFound, "Not found");
+      throw RouteError(HttpStatus.notFound, "Not found");
     }
 
     filePath = filePath.replaceAll('/', Platform.pathSeparator);
     filePath = filePath.replaceAll(Platform.pathSeparator + Platform.pathSeparator, Platform.pathSeparator);
 
-    FileResponse fr = new FileResponse(filePath);
+    FileResponse fr = FileResponse(filePath);
     await fr.response(request, vars);
   }
 }

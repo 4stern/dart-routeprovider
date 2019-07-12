@@ -5,7 +5,7 @@ import '../TestContext/TestContext.dart';
 
 void main() {
 
-    TestContext context = new TestContext(port: 4040);
+    TestContext context = TestContext(port: 4040);
     Router router;
 
     setUpAll(() async {

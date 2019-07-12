@@ -47,14 +47,14 @@ abstract class Controller {
   }
 
   Future<String> _getData(HttpRequest request) async {
-    Completer<String> _completer = new Completer();
+    Completer<String> _completer = Completer();
     String bodyData = "";
     utf8.decoder.bind(request).listen((stream) {
       bodyData += stream;
     }, onDone: () {
       _completer.complete(bodyData);
     }, onError: (Error error) {
-      throw new RouteError(HttpStatus.internalServerError, 'Internal Server Error');
+      throw RouteError(HttpStatus.internalServerError, 'Internal Server Error');
     });
     return _completer.future;
   }
@@ -74,7 +74,7 @@ abstract class Controller {
   }
 
   Future<Map> execute(HttpRequest request, Map params, {AuthResponse authResponse}) async {
-    Map<dynamic, dynamic> map = new Map<dynamic, dynamic>();
+    Map<dynamic, dynamic> map = Map<dynamic, dynamic>();
     return map;
   }
 }

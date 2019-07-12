@@ -1,3 +1,7 @@
+## 4.1.0
+- add StatusOnlyResponse
+- update syntax
+
 ## 4.0.2+1
 - Stronger Type
 
