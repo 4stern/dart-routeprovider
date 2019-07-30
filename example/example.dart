@@ -7,14 +7,14 @@ class RouteControllerError extends Controller {
 
   @override
   Future<Map> execute(HttpRequest request, Map params, {AuthResponse authResponse}) async {
-    throw new RouteError(HttpStatus.notFound, "ERROR");
+    throw RouteError(HttpStatus.notFound, "ERROR");
   }
 }
 
 class APIController extends RestApiController {
   @override
   Future<Map> onGet(HttpRequest request, Map params, {AuthResponse authResponse}) async {
-    throw new RouteError(HttpStatus.internalServerError, 'Not supported');
+    throw RouteError(HttpStatus.internalServerError, 'Not supported');
   }
 }
 
@@ -23,33 +23,33 @@ class MyAuth implements Auth {
   MyAuth({this.authed = false});
 
   @override
-  Future<AuthResponse> isAuthed(HttpRequest request, Map params) async => this.authed ? new StaticAuthResponse() : null;
+  Future<AuthResponse> isAuthed(HttpRequest request, Map params) async => this.authed ? StaticAuthResponse() : null;
 }
 
 Future main() async {
   HttpServer server = await HttpServer.bind(InternetAddress.loopbackIPv4, 4040);
 
-  new Router(server)
-    ..route(url: '/', responser: new FileResponse("docroot/home.html"), auth: new MyAuth(authed: true))
-    ..route(url: '/', responser: new FolderResponse("docroot/"), auth: new MyAuth(authed: true))
-    ..route(url: '/img', responser: new FolderResponse("docroot/assets/img"), auth: new MyAuth(authed: true))
-    ..route(url: '/assets/**', responser: new FolderResponse("docroot/assets/"), auth: new MyAuth(authed: true))
-    ..route(url: '/js/**', responser: new FolderResponse("docroot/code/"), auth: new MyAuth(authed: true))
+  Router(server)
+    ..route(url: '/', responser: FileResponse("docroot/home.html"), auth: MyAuth(authed: true))
+    ..route(url: '/', responser: FolderResponse("docroot/"), auth: MyAuth(authed: true))
+    ..route(url: '/img', responser: FolderResponse("docroot/assets/img"), auth: MyAuth(authed: true))
+    ..route(url: '/assets/**', responser: FolderResponse("docroot/assets/"), auth: MyAuth(authed: true))
+    ..route(url: '/js/**', responser: FolderResponse("docroot/code/"), auth: MyAuth(authed: true))
     ..route(
         url: '/error',
-        controller: new RouteControllerError(),
-        responser: new FileResponse("docroot/home.html"),
-        auth: new MyAuth(authed: true))
+        controller: RouteControllerError(),
+        responser: FileResponse("docroot/home.html"),
+        auth: MyAuth(authed: true))
     ..route(
         url: '/error2',
-        controller: new APIController(),
-        responser: new FileResponse("docroot/home.html"),
-        auth: new MyAuth(authed: true))
+        controller: APIController(),
+        responser: FileResponse("docroot/home.html"),
+        auth: MyAuth(authed: true))
     ..route(
         url: '/noauth',
-        controller: new APIController(),
-        responser: new FileResponse("docroot/home.html"),
-        auth: new MyAuth(authed: false))
+        controller: APIController(),
+        responser: FileResponse("docroot/home.html"),
+        auth: MyAuth(authed: false))
     ..start();
 
   print('listening on localhost, port ${server.port}');
