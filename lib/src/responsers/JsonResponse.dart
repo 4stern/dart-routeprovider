@@ -1,6 +1,6 @@
 part of route_provider;
 
-class JsonResponse extends Response {
+class JsonResponse<T extends Map<dynamic, dynamic>> extends Response<T> {
   JsonResponse() : super();
 
   @override
@@ -9,7 +9,7 @@ class JsonResponse extends Response {
   }
 
   @override
-  Future response(HttpRequest request, Map responseData) {
+  Future response(HttpRequest request, T responseData) {
     try {
       request.response.headers.add(HttpHeaders.contentTypeHeader, getContentType());
       if (responseData != null) {
