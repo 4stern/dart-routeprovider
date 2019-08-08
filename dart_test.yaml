@@ -1,0 +1,4 @@
+reporter: expanded
+color: false
+filename: "*Test.dart"
+concurrency: 1

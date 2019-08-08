@@ -1,6 +1,6 @@
 part of route_provider;
 
-abstract class Controller {
+abstract class Controller<T extends Map<dynamic, dynamic>> {
   Controller();
 
   dynamic _testJson(String data) {
@@ -73,11 +73,12 @@ abstract class Controller {
     return data;
   }
 
-  Future<Map> execute(HttpRequest request, Map params, {AuthResponse authResponse}) async {
-    Map<dynamic, dynamic> map = Map<dynamic, dynamic>();
-    return map;
+  Future<T> execute(HttpRequest request, Map params, {AuthResponse authResponse});
+}
+/// Empty implementation of RouteController
+class EmptyRouteController extends Controller<Map<dynamic, dynamic>> {
+  @override
+  Future<Map<dynamic, dynamic>> execute(HttpRequest request, Map params, {AuthResponse authResponse}) async {
+    return Map<dynamic, dynamic>();
   }
 }
-
-/// Empty implementation of RouteController
-class EmptyRouteController extends Controller {}

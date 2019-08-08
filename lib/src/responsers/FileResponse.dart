@@ -1,12 +1,12 @@
 part of route_provider;
 
-class FileResponse extends Response {
+class FileResponse<T extends Map<dynamic, dynamic>> extends Response<T> {
   String filename;
 
   FileResponse(this.filename) : super();
 
   @override
-  Future response(HttpRequest request, Map vars) async {
+  Future response(HttpRequest request, T vars) async {
     String fileName = this.filename;
     var file = File(fileName);
     bool fileExists = await file.exists();

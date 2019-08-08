@@ -1,8 +1,8 @@
 part of route_provider;
 
-abstract class WebSocketController extends Controller {
+abstract class WebSocketController extends Controller<Map<dynamic, dynamic>> {
   @override
-  Future<Map> execute(HttpRequest request, Map params, {AuthResponse authResponse}) async {
+  Future<Map<dynamic, dynamic>> execute(HttpRequest request, Map params, {AuthResponse authResponse}) async {
     try {
       WebSocket websocket = await WebSocketTransformer.upgrade(request);
       websocket.listen((dynamic message) {

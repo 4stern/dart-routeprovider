@@ -1,6 +1,6 @@
 part of route_provider;
 
-abstract class RestApiController extends Controller {
+abstract class RestApiController<T extends Map<dynamic, dynamic>> extends Controller<T> {
   bool cors;
 
   RestApiController({this.cors = true});
@@ -11,44 +11,44 @@ abstract class RestApiController extends Controller {
     request.response.headers.set("Access-Control-Allow-Headers", 'Content-Type,Accept,X-Access-Token,X-Key');
   }
 
-  Future<Map> onOptions(HttpRequest request, Map params, {AuthResponse authResponse}) async {
+  Future<T> onOptions(HttpRequest request, Map params, {AuthResponse authResponse}) async {
     throw RouteError(HttpStatus.internalServerError, 'Not supported');
   }
 
-  Future<Map> onGet(HttpRequest request, Map params, {AuthResponse authResponse}) async {
+  Future<T> onGet(HttpRequest request, Map params, {AuthResponse authResponse}) async {
     throw RouteError(HttpStatus.internalServerError, 'Not supported');
   }
 
-  Future<Map> onHead(HttpRequest request, Map params, {AuthResponse authResponse}) async {
+  Future<T> onHead(HttpRequest request, Map params, {AuthResponse authResponse}) async {
     throw RouteError(HttpStatus.internalServerError, 'Not supported');
   }
 
-  Future<Map> onPost(HttpRequest request, Map params, {AuthResponse authResponse}) async {
+  Future<T> onPost(HttpRequest request, Map params, {AuthResponse authResponse}) async {
     throw RouteError(HttpStatus.internalServerError, 'Not supported');
   }
 
-  Future<Map> onPut(HttpRequest request, Map params, {AuthResponse authResponse}) async {
+  Future<T> onPut(HttpRequest request, Map params, {AuthResponse authResponse}) async {
     throw RouteError(HttpStatus.internalServerError, 'Not supported');
   }
 
-  Future<Map> onDelete(HttpRequest request, Map params, {AuthResponse authResponse}) async {
+  Future<T> onDelete(HttpRequest request, Map params, {AuthResponse authResponse}) async {
     throw RouteError(HttpStatus.internalServerError, 'Not supported');
   }
 
-  Future<Map> onTrace(HttpRequest request, Map params, {AuthResponse authResponse}) async {
+  Future<T> onTrace(HttpRequest request, Map params, {AuthResponse authResponse}) async {
     throw RouteError(HttpStatus.internalServerError, 'Not supported');
   }
 
-  Future<Map> onConnect(HttpRequest request, Map params, {AuthResponse authResponse}) async {
+  Future<T> onConnect(HttpRequest request, Map params, {AuthResponse authResponse}) async {
     throw RouteError(HttpStatus.internalServerError, 'Not supported');
   }
 
-  Future<Map> onDefault(HttpRequest request, Map params, {AuthResponse authResponse}) async {
+  Future<T> onDefault(HttpRequest request, Map params, {AuthResponse authResponse}) async {
     throw RouteError(HttpStatus.internalServerError, 'Not supported');
   }
 
   @override
-  Future<Map> execute(HttpRequest request, Map params, {AuthResponse authResponse}) async {
+  Future<T> execute(HttpRequest request, Map params, {AuthResponse authResponse}) async {
     try {
       if (cors) {
         setCorsHeaders(request);

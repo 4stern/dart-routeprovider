@@ -1,3 +1,6 @@
+## 4.2.0
+- add generics
+
 ## 4.1.0
 - add StatusOnlyResponse
 - update syntax

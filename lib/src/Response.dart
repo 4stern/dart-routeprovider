@@ -1,9 +1,9 @@
 part of route_provider;
 
-abstract class Response {
+abstract class Response<T extends Map<dynamic, dynamic>> {
   Response();
 
-  Future response(HttpRequest request, Map vars) async {}
+  Future response(HttpRequest request, T vars) async {}
 
   String getContentType() {
     return ContentType("text", "plain", charset: "utf-8").toString();
