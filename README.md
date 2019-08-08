@@ -5,7 +5,7 @@
 Add it to your dependencies
 ```
 dependencies:
-  route_provider: ^4.1.0
+  route_provider: ^4.2.0
 ```
 
 and install the package
@@ -18,29 +18,29 @@ $ pub get
 import 'dart:io';
 import 'package:route_provider/route_provider.dart';
 main() {
-    Auth freeForAll = new StaticAuth(authed: true);
-    Auth userAuth = new MyAuth();
-    Responser jsonResponser = new JsonResponse();
+    Auth freeForAll = StaticAuth(authed: true);
+    Auth userAuth = MyAuth();
+    Responser jsonResponser = JsonResponse();
     HttpServer.bind(InternetAddress.anyIPv4,8080).then((HttpServer server){
         new Router(server)
         ..route(
             url: "/",
-            responser: new FileResponse("docroot/index.html"),
+            responser: FileResponse("docroot/index.html"),
             auth: freeForAll
         )
         ..route(
             url: '/assets/**',
-            responser: new FolderResponse("docroot/assets/"),
+            responser: FolderResponse("docroot/assets/"),
             auth: freeForAll
         )
         ..route(
             url: "/impress",
-            responser: new FileResponse("docroot/impress.html"),
+            responser: FileResponse("docroot/impress.html"),
             auth: freeForAll
         )
         ..route(
             url: "/api/data/:id",
-            controller: new DataRestApiController(),
+            controller: DataRestApiController(),
             responser: jsonResponser,
             auth: userAuth
         )
