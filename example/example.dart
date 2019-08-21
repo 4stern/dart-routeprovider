@@ -35,21 +35,9 @@ Future main() async {
     ..route(url: '/img', responser: FolderResponse("docroot/assets/img"), auth: MyAuth(authed: true))
     ..route(url: '/assets/**', responser: FolderResponse("docroot/assets/"), auth: MyAuth(authed: true))
     ..route(url: '/js/**', responser: FolderResponse("docroot/code/"), auth: MyAuth(authed: true))
-    ..route(
-        url: '/error',
-        controller: RouteControllerError(),
-        responser: FileResponse("docroot/home.html"),
-        auth: MyAuth(authed: true))
-    ..route(
-        url: '/error2',
-        controller: APIController(),
-        responser: FileResponse("docroot/home.html"),
-        auth: MyAuth(authed: true))
-    ..route(
-        url: '/noauth',
-        controller: APIController(),
-        responser: FileResponse("docroot/home.html"),
-        auth: MyAuth(authed: false))
+    ..route(url: '/error', controller: RouteControllerError(), responser: FileResponse("docroot/home.html"), auth: MyAuth(authed: true))
+    ..route(url: '/error2', controller: APIController(), responser: FileResponse("docroot/home.html"), auth: MyAuth(authed: true))
+    ..route(url: '/noauth', controller: APIController(), responser: FileResponse("docroot/home.html"), auth: MyAuth(authed: false))
     ..start();
 
   print('listening on localhost, port ${server.port}');

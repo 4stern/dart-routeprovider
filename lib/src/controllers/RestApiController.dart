@@ -2,17 +2,24 @@ part of route_provider;
 
 abstract class RestApiController<T extends Map<dynamic, dynamic>> extends Controller<T> {
   bool cors;
+  List<String> corsOrigin = ['*'];
+  List<String> corsMethods = ['GET', 'PUT', 'POST', 'DELETE', 'OPTIONS', 'CONNECT'];
+  List<String> corsHeaders = ['Content-Type', 'Accept', 'X-Access-Token', 'X-Key'];
 
   RestApiController({this.cors = true});
 
   void setCorsHeaders(HttpRequest request) {
-    request.response.headers.set("Access-Control-Allow-Origin", '*');
-    request.response.headers.set("Access-Control-Allow-Methods", 'GET,PUT,POST,DELETE,OPTIONS,CONNECT');
-    request.response.headers.set("Access-Control-Allow-Headers", 'Content-Type,Accept,X-Access-Token,X-Key');
+    request.response.headers.set("Access-Control-Allow-Origin", corsOrigin.join(','));
+    request.response.headers.set("Access-Control-Allow-Methods", corsMethods.join(','));
+    request.response.headers.set("Access-Control-Allow-Headers", corsHeaders.join(','));
   }
 
   Future<T> onOptions(HttpRequest request, Map params, {AuthResponse authResponse}) async {
-    throw RouteError(HttpStatus.internalServerError, 'Not supported');
+    if (cors) {
+      throw RouteError(HttpStatus.ok, '');
+    } else {
+      throw RouteError(HttpStatus.internalServerError, 'Not supported');
+    }
   }
 
   Future<T> onGet(HttpRequest request, Map params, {AuthResponse authResponse}) async {

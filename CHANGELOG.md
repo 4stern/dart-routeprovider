@@ -1,3 +1,7 @@
+## 4.2.1
+- cors data now more flexible
+- reformat code
+
 ## 4.2.0
 - add generics
 

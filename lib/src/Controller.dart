@@ -75,6 +75,7 @@ abstract class Controller<T extends Map<dynamic, dynamic>> {
 
   Future<T> execute(HttpRequest request, Map params, {AuthResponse authResponse});
 }
+
 /// Empty implementation of RouteController
 class EmptyRouteController extends Controller<Map<dynamic, dynamic>> {
   @override

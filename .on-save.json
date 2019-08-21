@@ -1,0 +1,11 @@
+[
+    {
+        "files": "**/*_test.dart",
+        "command": "pub run test"
+    },
+    {
+        "showOutput": false,
+        "files": "**/*.dart",
+        "command": "dartfmt --fix -l 160 -w ."
+    }
+]

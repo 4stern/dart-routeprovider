@@ -44,8 +44,8 @@ class Router {
   }
 
   void clear() {
-      _calls.clear();
-      _folders.clear();
+    _calls.clear();
+    _folders.clear();
   }
 
   Future handleRequest(HttpRequest request) async {
@@ -84,9 +84,7 @@ class Router {
   RouteBundle checkForDirectUrls(String path) => _calls.containsKey(path) ? _calls[path] : null;
 
   RouteBundle checkForFolders(String path) {
-    List<String> possibleFolders = _folders.keys
-        .where((folderPaths) => path.startsWith(folderPaths) == true && path.endsWith('/') == false)
-        .toList();
+    List<String> possibleFolders = _folders.keys.where((folderPaths) => path.startsWith(folderPaths) == true && path.endsWith('/') == false).toList();
     if (possibleFolders.isEmpty) {
       return null;
     } else if (possibleFolders.length == 1) {
