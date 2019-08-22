@@ -16,7 +16,7 @@ abstract class RestApiController<T extends Map<dynamic, dynamic>> extends Contro
 
   Future<T> onOptions(HttpRequest request, Map params, {AuthResponse authResponse}) async {
     if (cors) {
-      throw RouteError(HttpStatus.ok, '');
+      return <dynamic, dynamic>{} as T;
     } else {
       throw RouteError(HttpStatus.internalServerError, 'Not supported');
     }

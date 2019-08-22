@@ -1,3 +1,6 @@
+## 4.2.3
+- fix bug in RestApiController
+
 ## 4.2.2
 - fix bug in StatusOnlyResponse
 
