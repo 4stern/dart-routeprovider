@@ -1,3 +1,6 @@
+## 4.2.2
+- fix bug in StatusOnlyResponse
+
 ## 4.2.1
 - cors data now more flexible
 - reformat code
