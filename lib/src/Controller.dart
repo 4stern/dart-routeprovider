@@ -53,7 +53,7 @@ abstract class Controller<T extends Map<dynamic, dynamic>> {
       bodyData += stream;
     }, onDone: () {
       _completer.complete(bodyData);
-    }, onError: (Error error) {
+    }, onError: (Object error) {
       throw RouteError(HttpStatus.internalServerError, 'Internal Server Error');
     });
     return _completer.future;
