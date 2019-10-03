@@ -1,3 +1,6 @@
+## 4.2.4
+- Update Error-handling
+
 ## 4.2.3
 - fix bug in RestApiController
 
