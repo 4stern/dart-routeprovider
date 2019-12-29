@@ -41,9 +41,9 @@ class TestContext {
   TestContext({this.port = 4040});
 
   Future<HttpServer> createServer({InternetAddress adress, int port}) async {
-    InternetAddress _adress = adress != null ? adress : InternetAddress.loopbackIPv4;
-    int _port = port != null ? port : this.port;
-    return await HttpServer.bind(_adress, _port);
+    adress ??= InternetAddress.loopbackIPv4;
+    port ??= this.port;
+    return await HttpServer.bind(adress, port);
   }
 
   Router createRouter(HttpServer server) {

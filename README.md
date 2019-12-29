@@ -5,7 +5,7 @@
 Add it to your dependencies
 ```
 dependencies:
-  route_provider: ^4.2.3
+  route_provider: ^4.3.0
 ```
 
 and install the package
@@ -14,7 +14,7 @@ $ pub get
 ```
 
 ## Usage
-```javascript
+```dart in html
 import 'dart:io';
 import 'package:route_provider/route_provider.dart';
 main() {
@@ -24,22 +24,22 @@ main() {
     HttpServer.bind(InternetAddress.anyIPv4,8080).then((HttpServer server){
         Router(server)
         ..route(
-            url: "/",
-            responser: FileResponse("docroot/index.html"),
+            url: '/',
+            responser: FileResponse('docroot/index.html'),
             auth: freeForAll
         )
         ..route(
             url: '/assets/**',
-            responser: FolderResponse("docroot/assets/"),
+            responser: FolderResponse('docroot/assets/'),
             auth: freeForAll
         )
         ..route(
-            url: "/impress",
-            responser: FileResponse("docroot/impress.html"),
+            url: '/impress',
+            responser: FileResponse('docroot/impress.html'),
             auth: freeForAll
         )
         ..route(
-            url: "/api/data/:id",
+            url: '/api/data/:id',
             controller: DataRestApiController(),
             responser: jsonResponser,
             auth: userAuth

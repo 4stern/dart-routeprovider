@@ -9,9 +9,9 @@ abstract class RestApiController<T extends Map<dynamic, dynamic>> extends Contro
   RestApiController({this.cors = true});
 
   void setCorsHeaders(HttpRequest request) {
-    request.response.headers.set("Access-Control-Allow-Origin", corsOrigin.join(','));
-    request.response.headers.set("Access-Control-Allow-Methods", corsMethods.join(','));
-    request.response.headers.set("Access-Control-Allow-Headers", corsHeaders.join(','));
+    request.response.headers.set('Access-Control-Allow-Origin', corsOrigin.join(','));
+    request.response.headers.set('Access-Control-Allow-Methods', corsMethods.join(','));
+    request.response.headers.set('Access-Control-Allow-Headers', corsHeaders.join(','));
   }
 
   Future<T> onOptions(HttpRequest request, Map params, {AuthResponse authResponse}) async {
@@ -60,34 +60,34 @@ abstract class RestApiController<T extends Map<dynamic, dynamic>> extends Contro
       if (cors) {
         setCorsHeaders(request);
       }
-      String method = request.method.toUpperCase();
+      final method = request.method.toUpperCase();
       switch (method) {
-        case "OPTIONS":
-          return await this.onOptions(request, params, authResponse: authResponse);
+        case 'OPTIONS':
+          return await onOptions(request, params, authResponse: authResponse);
 
-        case "GET":
-          return await this.onGet(request, params, authResponse: authResponse);
+        case 'GET':
+          return await onGet(request, params, authResponse: authResponse);
 
-        case "HEAD":
-          return await this.onHead(request, params, authResponse: authResponse);
+        case 'HEAD':
+          return await onHead(request, params, authResponse: authResponse);
 
-        case "POST":
-          return await this.onPost(request, params, authResponse: authResponse);
+        case 'POST':
+          return await onPost(request, params, authResponse: authResponse);
 
-        case "PUT":
-          return await this.onPut(request, params, authResponse: authResponse);
+        case 'PUT':
+          return await onPut(request, params, authResponse: authResponse);
 
-        case "DELETE":
-          return await this.onDelete(request, params, authResponse: authResponse);
+        case 'DELETE':
+          return await onDelete(request, params, authResponse: authResponse);
 
-        case "TRACE":
-          return await this.onTrace(request, params, authResponse: authResponse);
+        case 'TRACE':
+          return await onTrace(request, params, authResponse: authResponse);
 
-        case "CONNECT":
-          return await this.onConnect(request, params, authResponse: authResponse);
+        case 'CONNECT':
+          return await onConnect(request, params, authResponse: authResponse);
 
         default:
-          return await this.onDefault(request, params, authResponse: authResponse);
+          return await onDefault(request, params, authResponse: authResponse);
       }
     } on RouteError catch (error, stacktrace) {
       print(error.getMessage().toString());

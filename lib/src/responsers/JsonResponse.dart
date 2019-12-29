@@ -5,7 +5,7 @@ class JsonResponse<T extends Map<dynamic, dynamic>> extends Response<T> {
 
   @override
   String getContentType() {
-    return ContentType("application", "json", charset: "utf-8").toString();
+    return ContentType('application', 'json', charset: 'utf-8').toString();
   }
 
   @override
@@ -13,7 +13,7 @@ class JsonResponse<T extends Map<dynamic, dynamic>> extends Response<T> {
     try {
       request.response.headers.add(HttpHeaders.contentTypeHeader, getContentType());
       if (responseData != null) {
-        String outputString = json.encode(responseData);
+        final outputString = json.encode(responseData);
         print('JsonResponse -> ' + request.uri.toString() + '\n\t' + outputString);
 
         request.response.write(outputString);

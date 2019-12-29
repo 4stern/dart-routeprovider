@@ -7,14 +7,13 @@ class FileResponse<T extends Map<dynamic, dynamic>> extends Response<T> {
 
   @override
   Future response(HttpRequest request, T vars) async {
-    String fileName = this.filename;
+    final fileName = this.filename;
     var file = File(fileName);
-    bool fileExists = await file.exists();
+    final fileExists = await file.exists();
     if (fileExists == true) {
-      String mimeType = mime(fileName);
-      if (mimeType == null) {
-        mimeType = getContentType();
-      }
+      var mimeType = mime(fileName);
+      mimeType ??= getContentType();
+
       request.response.headers.add(HttpHeaders.contentTypeHeader, mimeType);
 
       StreamConsumer<List<int>> streamConsumer = request.response;
@@ -22,7 +21,7 @@ class FileResponse<T extends Map<dynamic, dynamic>> extends Response<T> {
         return streamConsumer.close();
       });
     } else {
-      throw RouteError(HttpStatus.notFound, "Not found");
+      throw RouteError(HttpStatus.notFound, 'Not found');
     }
   }
 }

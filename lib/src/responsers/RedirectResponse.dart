@@ -8,6 +8,6 @@ class RedirectResponse<T extends Map<dynamic, dynamic>> extends Response<T> {
 
   @override
   Future response(HttpRequest request, T vars) async {
-    return request.response.redirect(Uri.parse(this.routeUrl), status: this.httpStatus);
+    return request.response.redirect(Uri.parse(routeUrl), status: httpStatus);
   }
 }

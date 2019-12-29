@@ -5,7 +5,5 @@ abstract class Response<T extends Map<dynamic, dynamic>> {
 
   Future response(HttpRequest request, T vars) async {}
 
-  String getContentType() {
-    return ContentType("text", "plain", charset: "utf-8").toString();
-  }
+  String getContentType() => ContentType('text', 'plain', charset: 'utf-8').toString();
 }

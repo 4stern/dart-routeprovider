@@ -7,6 +7,6 @@ class RouteControllerError extends Controller {
 
   @override
   Future<Map> execute(HttpRequest request, Map params, {AuthResponse authResponse}) async {
-    throw RouteError(httpStatus, "ERROR");
+    throw RouteError(httpStatus, 'ERROR');
   }
 }
