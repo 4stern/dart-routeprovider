@@ -1,3 +1,7 @@
+## 4.3.0
+- add Router with logging
+- syntax upgrade
+
 ## 4.2.4
 - Update Error-handling
 
