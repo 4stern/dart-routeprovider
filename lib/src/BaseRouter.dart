@@ -32,8 +32,8 @@ class BaseRouter {
   }
 
   void stop() {
-    server.close();
-    subscription.cancel();
+    server?.close();
+    subscription?.cancel();
     subscription = null;
   }
 
