@@ -1,29 +1,29 @@
 part of route_provider;
 
-class BaseRouter {
+class BaseRouter<R extends Map<dynamic, dynamic>, A extends AuthResponse> {
   HttpServer server;
   String basePath;
   StreamSubscription subscription;
-  final Map<String, RouteBundle> _calls = {};
-  final Map<String, RouteBundle> _folders = {};
+  final Map<String, RouteBundle<R,A>> _calls = {};
+  final Map<String, RouteBundle<R,A>> _folders = {};
 
   BaseRouter(this.server, {this.basePath = ''});
 
-  void route({String url, Controller controller, Response responser, Auth auth}) {
+  void route({String url, Controller<R,A> controller, Response<R> responser, Auth<A> auth}) {
     ArgumentError.checkNotNull(url);
 
-    controller ??= EmptyRouteController();
-    auth ??= StaticAuth(authed: true);
+    controller ??= EmptyRouteController<R, A>();
+    auth ??= StaticAuth(authed: true) as Auth<A>;
 
     final realPath = basePath + url;
-    if (responser is FolderResponse) {
+    if (responser is FolderResponse<R>) {
       final normalizedRealPath = realPath.replaceAll('*', '');
       responser.urlPattern = normalizedRealPath;
       responser.recursive = realPath.contains('/**');
 
-      _folders[normalizedRealPath] = RouteBundle(controller, responser, auth);
+      _folders[normalizedRealPath] = RouteBundle<R, A>(controller, responser, auth);
     } else {
-      _calls[realPath] = RouteBundle(controller, responser, auth);
+      _calls[realPath] = RouteBundle<R, A>(controller, responser, auth);
     }
   }
 

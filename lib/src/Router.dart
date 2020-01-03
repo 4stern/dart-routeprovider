@@ -7,7 +7,7 @@ class UrlController {
   UrlController(this.url, this.controllerName);
 }
 
-class Router extends BaseRouter {
+class Router<R extends Map<dynamic, dynamic>, A extends AuthResponse> extends BaseRouter<R, A> {
   final _routes = <UrlController>[];
   int _urlLenght = 0;
   int _controllerNameLength = 0;
@@ -38,7 +38,7 @@ class Router extends BaseRouter {
   }
 
   @override
-  void route({String url, Controller controller, Response responser, Auth auth}) {
+  void route({String url, Controller<R, A> controller, Response<R> responser, Auth<A> auth}) {
     final controllerName = _controllerName(controller);
     _routes.add(UrlController(url, controllerName));
     if (controllerName.length > _controllerNameLength) {

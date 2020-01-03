@@ -2,10 +2,10 @@ part of route_provider;
 
 class StaticAuthResponse implements AuthResponse {}
 
-class StaticAuth implements Auth {
+class StaticAuth implements Auth<StaticAuthResponse> {
   bool authed;
   StaticAuth({this.authed});
 
   @override
-  Future<AuthResponse> isAuthed(HttpRequest request, Map params) async => authed ? StaticAuthResponse() : null;
+  Future<StaticAuthResponse> isAuthed(HttpRequest request, Map params) async => authed ? StaticAuthResponse() : null;
 }

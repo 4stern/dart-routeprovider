@@ -1,6 +1,6 @@
 part of route_provider;
 
-class FolderResponse<T extends Map<dynamic, dynamic>> extends Response<T> {
+class FolderResponse<R extends Map<dynamic, dynamic>> extends Response<R> {
   String folderpath;
 
   /// set by routeprovider while init
@@ -14,7 +14,7 @@ class FolderResponse<T extends Map<dynamic, dynamic>> extends Response<T> {
   }
 
   @override
-  Future response(HttpRequest request, T vars) async {
+  Future response(HttpRequest request, R vars) async {
     final path = request.uri.path;
     String filePath;
 
