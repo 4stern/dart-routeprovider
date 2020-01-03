@@ -7,7 +7,7 @@ class FileResponse<T extends Map<dynamic, dynamic>> extends Response<T> {
 
   @override
   Future response(HttpRequest request, T vars) async {
-    final fileName = this.filename;
+    final fileName = filename;
     var file = File(fileName);
     final fileExists = await file.exists();
     if (fileExists == true) {

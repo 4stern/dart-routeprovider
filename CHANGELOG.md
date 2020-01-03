@@ -1,3 +1,7 @@
+## 4.5.0
+- Syntax upgrades
+- JsonResponser don't end in error if no data is given, it returns now a empty object 
+
 ## 4.4.2
 - bugfixes
 

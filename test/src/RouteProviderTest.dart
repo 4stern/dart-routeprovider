@@ -1,4 +1,4 @@
-import "package:test/test.dart";
+import 'package:test/test.dart';
 import 'dart:io';
 import 'package:route_provider/route_provider.dart';
 import '../TestContext/TestContext.dart';
@@ -9,7 +9,7 @@ void main() {
 
   setUpAll(() async {
     router = await context.init();
-    router.start();
+    await router.start();
   });
 
   setUp(() async {

@@ -12,15 +12,14 @@ class JsonResponse<T extends Map<dynamic, dynamic>> extends Response<T> {
   Future response(HttpRequest request, T responseData) {
     try {
       request.response.headers.add(HttpHeaders.contentTypeHeader, getContentType());
-      if (responseData != null) {
+      responseData ??= <dynamic, dynamic>{} as T;
+      try {
         final outputString = json.encode(responseData);
-        print('JsonResponse -> ' + request.uri.toString() + '\n\t' + outputString);
-
         request.response.write(outputString);
         request.response.close();
-      } else {
+      } catch(e) {
         throw RouteError(HttpStatus.internalServerError, 'Converting data to json failed');
-      }
+      };
     } on RouteError catch (routeError, stacktrace) {
       print(routeError.getMessage());
       print(stacktrace.toString());
