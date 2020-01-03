@@ -30,6 +30,10 @@ abstract class RestApiController<T extends Map<dynamic, dynamic>, K extends Auth
     throw RouteError(HttpStatus.internalServerError, 'Not supported');
   }
 
+  Future<T> onPatch(HttpRequest request, Map params, {K authResponse}) async {
+    throw RouteError(HttpStatus.internalServerError, 'Not supported');
+  }
+
   Future<T> onPost(HttpRequest request, Map params, {K authResponse}) async {
     throw RouteError(HttpStatus.internalServerError, 'Not supported');
   }
@@ -71,7 +75,10 @@ abstract class RestApiController<T extends Map<dynamic, dynamic>, K extends Auth
         case 'HEAD':
           return await onHead(request, params, authResponse: authResponse);
 
-        case 'POST':
+        case 'PATCH':
+          return await onPatch(request, params, authResponse: authResponse);
+
+          case 'POST':
           return await onPost(request, params, authResponse: authResponse);
 
         case 'PUT':

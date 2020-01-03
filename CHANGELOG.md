@@ -1,3 +1,6 @@
+## 4.5.1
+- RestApiController now support Patch method
+
 ## 4.5.0
 - Syntax upgrades
 - JsonResponser don't end in error if no data is given, it returns now a empty object 
