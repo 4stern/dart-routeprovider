@@ -118,7 +118,7 @@ class BaseRouter {
     try {
       final authResponse = await bundle.auth.isAuthed(request, params);
       if (authResponse != null) {
-        var templateVars = await bundle.controller.execute(request, params, authResponse: authResponse);
+        final templateVars = await bundle.controller.execute(request, params, authResponse: authResponse);
         await bundle.responser.response(request, templateVars);
       } else {
         throw RouteError(HttpStatus.unauthorized, 'Auth failed');

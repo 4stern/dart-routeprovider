@@ -1,5 +1,7 @@
 ## 4.3.1
 - Bugfix
+## 4.4.0
+- more generics in controller to be more flexiable on auth-responses
 
 ## 4.3.0
 - add Router with logging

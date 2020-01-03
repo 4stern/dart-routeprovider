@@ -1,6 +1,6 @@
 part of route_provider;
 
-abstract class WebSocketController extends Controller<Map<dynamic, dynamic>> {
+abstract class WebSocketController extends Controller<Map<dynamic, dynamic>, AuthResponse> {
   @override
   Future<Map<dynamic, dynamic>> execute(HttpRequest request, Map params, {AuthResponse authResponse}) async {
     try {
