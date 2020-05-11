@@ -1,3 +1,6 @@
+## 4.5.2
+- update dependencies
+
 ## 4.5.1
 - RestApiController now support Patch method
 
