@@ -1,3 +1,6 @@
+## 4.5.3
+- add toEncodable to JsonResponse to can invoke json encodement
+
 ## 4.5.2
 - update dependencies
 

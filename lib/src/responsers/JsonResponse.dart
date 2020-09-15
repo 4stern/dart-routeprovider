@@ -3,6 +3,13 @@ part of route_provider;
 class JsonResponse<T extends Map<dynamic, dynamic>> extends Response<T> {
   JsonResponse() : super();
 
+  Object toEncodable(Object object) {
+    if (object is DateTime) {
+      return object.toIso8601String();
+    }
+    return object;
+  }
+
   @override
   String getContentType() {
     return ContentType('application', 'json', charset: 'utf-8').toString();
@@ -14,7 +21,7 @@ class JsonResponse<T extends Map<dynamic, dynamic>> extends Response<T> {
       request.response.headers.add(HttpHeaders.contentTypeHeader, getContentType());
       responseData ??= <dynamic, dynamic>{} as T;
       try {
-        final outputString = json.encode(responseData);
+        final outputString = json.encode(responseData, toEncodable: toEncodable);
         request.response.write(outputString);
         request.response.close();
       } catch(e) {
